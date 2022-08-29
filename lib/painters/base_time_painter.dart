@@ -128,7 +128,7 @@ class BaseTimePainter extends CustomPainter {
     tp12.paint(canvas, size.topCenter(-tp12.size.topCenter(-paddingY)));
 
     var tp9 = getIndicatorText(
-      clockTimeFormat == ClockTimeFormat.twentyFourHours ? '18' : '9',
+      clockTimeFormat == ClockTimeFormat.TWENTYFOURHOURS ? '18' : '9',
       decoration.style9 ?? decoration.getDefaultTextStyle(),
     );
     tp9.paint(canvas, size.centerLeft(-tp9.size.centerLeft(-paddingX)));

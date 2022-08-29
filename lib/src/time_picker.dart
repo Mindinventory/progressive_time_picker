@@ -83,19 +83,19 @@ class _TimePickerState extends State<TimePicker> {
       pickedTime: widget.initTime,
       clockTimeFormat:
           widget.decoration?.clockNumberDecoration?.clockTimeFormat ??
-              ClockTimeFormat.twentyFourHours,
+              ClockTimeFormat.TWENTYFOURHOURS,
       clockIncrementTimeFormat:
           widget.decoration?.clockNumberDecoration?.clockIncrementTimeFormat ??
-              ClockIncrementTimeFormat.fiveMin,
+              ClockIncrementTimeFormat.FIVEMIN,
     );
     _end = pickedTimeToDivision(
       pickedTime: widget.endTime,
       clockTimeFormat:
           widget.decoration?.clockNumberDecoration?.clockTimeFormat ??
-              ClockTimeFormat.twentyFourHours,
+              ClockTimeFormat.TWENTYFOURHOURS,
       clockIncrementTimeFormat:
           widget.decoration?.clockNumberDecoration?.clockIncrementTimeFormat ??
-              ClockIncrementTimeFormat.fiveMin,
+              ClockIncrementTimeFormat.FIVEMIN,
     );
   }
 
@@ -171,13 +171,13 @@ class _TimePickerState extends State<TimePicker> {
             time: newInit,
             incrementTimeFormat: widget.decoration?.clockNumberDecoration
                     ?.clockIncrementTimeFormat ??
-                ClockIncrementTimeFormat.fiveMin,
+                ClockIncrementTimeFormat.FIVEMIN,
           );
           var outTime = formatTime(
             time: newEnd,
             incrementTimeFormat: widget.decoration?.clockNumberDecoration
                     ?.clockIncrementTimeFormat ??
-                ClockIncrementTimeFormat.fiveMin,
+                ClockIncrementTimeFormat.FIVEMIN,
           );
 
           widget.onSelectionChange(inTime, outTime);
@@ -192,13 +192,13 @@ class _TimePickerState extends State<TimePicker> {
             time: newInit,
             incrementTimeFormat: widget.decoration?.clockNumberDecoration
                     ?.clockIncrementTimeFormat ??
-                ClockIncrementTimeFormat.fiveMin,
+                ClockIncrementTimeFormat.FIVEMIN,
           );
           var outTime = formatTime(
             time: newEnd,
             incrementTimeFormat: widget.decoration?.clockNumberDecoration
                     ?.clockIncrementTimeFormat ??
-                ClockIncrementTimeFormat.fiveMin,
+                ClockIncrementTimeFormat.FIVEMIN,
           );
 
           widget.onSelectionEnd(inTime, outTime);

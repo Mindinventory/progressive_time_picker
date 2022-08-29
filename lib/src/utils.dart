@@ -101,62 +101,62 @@ bool isAngleInsideRadiansSelection(
 }
 
 enum ClockTimeFormat {
-  twelveHours,
-  twentyFourHours,
+  TWELVEHOURS,
+  TWENTYFOURHOURS,
 }
 
 extension ClockTimeFormatExtension on ClockTimeFormat {
   int get value {
     switch (this) {
-      case ClockTimeFormat.twelveHours:
+      case ClockTimeFormat.TWELVEHOURS:
         return 12;
-      case ClockTimeFormat.twentyFourHours:
+      case ClockTimeFormat.TWENTYFOURHOURS:
         return 24;
     }
   }
 }
 
 enum ClockIncrementTimeFormat {
-  oneMin,
-  twoMin,
-  threeMin,
-  fourMin,
-  fiveMin,
-  sixMin,
-  tenMin,
-  twelveMin,
-  fifteenMin,
-  twentyMin,
-  thirtyMin,
-  sixtyMin,
+  ONEMIN,
+  TWOMIN,
+  THREEMIN,
+  FOURMIN,
+  FIVEMIN,
+  SIXMIN,
+  TENMIN,
+  TWELVEMIN,
+  FIFTEENMIN,
+  TWENTYMIN,
+  THIRTYMIN,
+  SIXTYMIN,
 }
 
 extension ClockIncrementTimeFormatExtension on ClockIncrementTimeFormat {
   int get value {
     switch (this) {
-      case ClockIncrementTimeFormat.oneMin:
+      case ClockIncrementTimeFormat.ONEMIN:
         return 1;
-      case ClockIncrementTimeFormat.twoMin:
+      case ClockIncrementTimeFormat.TWOMIN:
         return 2;
-      case ClockIncrementTimeFormat.threeMin:
+      case ClockIncrementTimeFormat.THREEMIN:
         return 3;
-      case ClockIncrementTimeFormat.fourMin:
+      case ClockIncrementTimeFormat.FOURMIN:
         return 4;
-      case ClockIncrementTimeFormat.fiveMin:
+      case ClockIncrementTimeFormat.FIVEMIN:
         return 5;
-      case ClockIncrementTimeFormat.sixMin:
+      case ClockIncrementTimeFormat.SIXMIN:
         return 6;
-      case ClockIncrementTimeFormat.tenMin:
+      case ClockIncrementTimeFormat.TENMIN:
         return 10;
-      case ClockIncrementTimeFormat.twelveMin:
+      case ClockIncrementTimeFormat.TWELVEMIN:
         return 12;
-      case ClockIncrementTimeFormat.fifteenMin:
+      case ClockIncrementTimeFormat.FIFTEENMIN:
         return 15;
-      case ClockIncrementTimeFormat.twentyMin:
+      case ClockIncrementTimeFormat.TWENTYMIN:
         return 20;
-      case ClockIncrementTimeFormat.thirtyMin:
+      case ClockIncrementTimeFormat.THIRTYMIN:
         return 30;
-      case ClockIncrementTimeFormat.sixtyMin:
+      case ClockIncrementTimeFormat.SIXTYMIN:
         return 60;
     }
   }
@@ -198,9 +198,9 @@ PickedTime formatTime({
 PickedTime formatIntervalTime({
   required PickedTime init,
   required PickedTime end,
-  ClockTimeFormat clockTimeFormat = ClockTimeFormat.twentyFourHours,
+  ClockTimeFormat clockTimeFormat = ClockTimeFormat.TWENTYFOURHOURS,
   ClockIncrementTimeFormat clockIncrementTimeFormat =
-      ClockIncrementTimeFormat.fiveMin,
+      ClockIncrementTimeFormat.FIVEMIN,
 }) {
   var clockTimeDivision = getClockTimeFormatDivision(
     clockTimeFormat,
@@ -235,9 +235,9 @@ bool validateSleepGoal({
   required PickedTime inTime,
   required PickedTime outTime,
   required double sleepGoal,
-  ClockTimeFormat clockTimeFormat = ClockTimeFormat.twentyFourHours,
+  ClockTimeFormat clockTimeFormat = ClockTimeFormat.TWENTYFOURHOURS,
   ClockIncrementTimeFormat clockIncrementTimeFormat =
-      ClockIncrementTimeFormat.fiveMin,
+      ClockIncrementTimeFormat.FIVEMIN,
 }) {
   var clockTimeDivision = getClockTimeFormatDivision(
     clockTimeFormat,
