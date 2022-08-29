@@ -44,15 +44,27 @@ class TimePickerSweepDecoration {
         assert((pickerGradient != null && pickerColor != null) ? false : true,
             'color is not needed when a gradient is defined');
 
-  paint(Canvas canvas, Size size, Offset center, double startAngle,
-      double sweepAngle) {
+  paint(
+    Canvas canvas,
+    Size size,
+    Offset center,
+    double startAngle,
+    double sweepAngle,
+  ) {
     var tmpStartAngle = -pi / 2 + startAngle;
     var sweepRect = Rect.fromCircle(
-        center: center, radius: getRadius(size.width, size.height));
+      center: center,
+      radius: getRadius(size.width, size.height),
+    );
 
     Paint timeProgressBrush = _getPaint(rect: sweepRect);
     canvas.drawArc(
-        sweepRect, tmpStartAngle, sweepAngle, false, timeProgressBrush);
+      sweepRect,
+      tmpStartAngle,
+      sweepAngle,
+      false,
+      timeProgressBrush,
+    );
 
     if (showConnector) {
       var timeProgressConnectorBrush = Paint()

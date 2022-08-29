@@ -93,7 +93,10 @@ class TimePickerHandlerDecoration {
     Offset center,
   ) {
     var handlerBrush = _getPaint(
-        color: this.color, width: this.radius, style: PaintingStyle.fill);
+      color: this.color,
+      width: this.radius,
+      style: PaintingStyle.fill,
+    );
 
     var rect = Rect.fromCircle(center: center, radius: this.radius);
     _drawShadow(canvas, center);
@@ -126,8 +129,10 @@ class TimePickerHandlerDecoration {
       canvas.drawCircle(center, this.handlerOutterRadius, handlerOutterBrush);
     } else {
       var parent = Path()
-        ..addRect(
-            Rect.fromCircle(center: center, radius: this.handlerOutterRadius));
+        ..addRect(Rect.fromCircle(
+          center: center,
+          radius: this.handlerOutterRadius,
+        ));
 
       canvas.drawPath(parent, handlerOutterBrush);
     }
@@ -140,18 +145,23 @@ class TimePickerHandlerDecoration {
     if (shape == BoxShape.circle)
       parent
         ..addOval(Rect.fromCircle(
-            center: center, radius: this.radius + shadow!.spreadRadius));
+          center: center,
+          radius: this.radius + shadow!.spreadRadius,
+        ));
     else
       parent
         ..addRect(Rect.fromCircle(
-            center: center, radius: this.radius + shadow!.spreadRadius));
+          center: center,
+          radius: this.radius + shadow!.spreadRadius,
+        ));
 
     Paint shadowPaintBrush = Paint()
       ..color = shadow!.color.withOpacity(.5)
       ..maskFilter = MaskFilter.blur(
           BlurStyle.normal,
           Shadow.convertRadiusToSigma(
-              shadow!.blurRadius + shadow!.spreadRadius));
+            shadow!.blurRadius + shadow!.spreadRadius,
+          ));
 
     canvas.drawPath(parent, shadowPaintBrush);
   }
@@ -169,13 +179,15 @@ class TimePickerHandlerDecoration {
 
     TextPainter textPainter = TextPainter(textDirection: TextDirection.rtl);
     textPainter.text = TextSpan(
-        recognizer: TapGestureRecognizer()
-          ..onTap = () => print("The word touched is"),
-        text: String.fromCharCode(icon!.icon!.codePoint),
-        style: TextStyle(
-            color: icon!.color,
-            fontSize: iconSize,
-            fontFamily: icon!.icon!.fontFamily));
+      recognizer: TapGestureRecognizer()
+        ..onTap = () => print("The word touched is"),
+      text: String.fromCharCode(icon!.icon!.codePoint),
+      style: TextStyle(
+        color: icon!.color,
+        fontSize: iconSize,
+        fontFamily: icon!.icon!.fontFamily,
+      ),
+    );
     textPainter.layout();
 
     /// Radius of inner circle or the icon is x/2
