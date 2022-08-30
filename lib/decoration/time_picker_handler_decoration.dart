@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 ///
@@ -179,8 +178,6 @@ class TimePickerHandlerDecoration {
 
     TextPainter textPainter = TextPainter(textDirection: TextDirection.rtl);
     textPainter.text = TextSpan(
-      recognizer: TapGestureRecognizer()
-        ..onTap = () => print("The word touched is"),
       text: String.fromCharCode(icon!.icon!.codePoint),
       style: TextStyle(
         color: icon!.color,

@@ -1,6 +1,9 @@
 ## 0.0.5
 
-* added support of Increment Time in TimePickerClockNumberDecoration for the Time Picker.
+* added support of Time Increment feature for the Time Picker inside the
+  TimePickerClockNumberDecoration.
+* Using that ClockIncrementTimeFormat we're able to add Time Increment for the following values 1,
+  2, 3, 4, 5, 6, 10, 12, 15, 20, 30, and 60.
 
 ## 0.0.4
 
@@ -8,7 +11,9 @@
 
 ## 0.0.3
 
-* added support for single picker handler time selection or to disable the draggable behavior of picker handler (by using isInitHandlerSelectable and isEndHandlerSelectable Parameters of TimePicker).
+* added support for single picker handler time selection or to disable the draggable behavior of
+  picker handler (by using isInitHandlerSelectable and isEndHandlerSelectable Parameters of
+  TimePicker).
 
 ## 0.0.2
 
