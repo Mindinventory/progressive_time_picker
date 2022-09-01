@@ -30,7 +30,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  ClockTimeFormat _clockTimeFormat = ClockTimeFormat.twentyFourHours;
+  ClockTimeFormat _clockTimeFormat = ClockTimeFormat.TWENTYFOURHOURS;
+  ClockIncrementTimeFormat _clockIncrementTimeFormat =
+      ClockIncrementTimeFormat.FIVEMIN;
 
   PickedTime _inBedTime = PickedTime(h: 0, m: 0);
   PickedTime _outBedTime = PickedTime(h: 8, m: 0);
@@ -44,7 +46,11 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     _isSleepGoal = (_sleepGoal >= 8.0) ? true : false;
     _intervalBedTime = formatIntervalTime(
-        init: _inBedTime, end: _outBedTime, clockTimeFormat: _clockTimeFormat);
+      init: _inBedTime,
+      end: _outBedTime,
+      clockTimeFormat: _clockTimeFormat,
+      clockIncrementTimeFormat: _clockIncrementTimeFormat,
+    );
   }
 
   @override
@@ -118,6 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 scaleFactor: 2.0,
                 showNumberIndicators: true,
                 clockTimeFormat: _clockTimeFormat,
+                clockIncrementTimeFormat: _clockIncrementTimeFormat,
               ),
             ),
             child: Padding(
@@ -128,9 +135,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   Text(
                     '${intl.NumberFormat('00').format(_intervalBedTime.h)}Hr ${intl.NumberFormat('00').format(_intervalBedTime.m)}Min',
                     style: TextStyle(
-                        fontSize: 14.0,
-                        color: _isSleepGoal ? Color(0xFF3CDAF7) : Colors.white,
-                        fontWeight: FontWeight.bold),
+                      fontSize: 14.0,
+                      color: _isSleepGoal ? Color(0xFF3CDAF7) : Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
@@ -224,12 +232,17 @@ class _MyHomePageState extends State<MyHomePage> {
     _inBedTime = init;
     _outBedTime = end;
     _intervalBedTime = formatIntervalTime(
-        init: _inBedTime, end: _outBedTime, clockTimeFormat: _clockTimeFormat);
+      init: _inBedTime,
+      end: _outBedTime,
+      clockTimeFormat: _clockTimeFormat,
+      clockIncrementTimeFormat: _clockIncrementTimeFormat,
+    );
     _isSleepGoal = validateSleepGoal(
       inTime: init,
       outTime: end,
       sleepGoal: _sleepGoal,
       clockTimeFormat: _clockTimeFormat,
+      clockIncrementTimeFormat: _clockIncrementTimeFormat,
     );
     setState(() {});
   }

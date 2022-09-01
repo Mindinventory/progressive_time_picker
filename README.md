@@ -3,37 +3,42 @@
 <a href="https://flutter.dev/"><img src="https://img.shields.io/badge/flutter-website-deepskyblue.svg" alt="Flutter Website"></a>
 <a href="https://dart.dev"><img src="https://img.shields.io/badge/dart-website-deepskyblue.svg" alt="Dart Website"></a>
 <a href="https://developer.android.com" style="pointer-events: stroke;" target="_blank">
-<img src="https://img.shields.io/badge/platform-Android-yellow">
+<img src="https://img.shields.io/badge/platform-Android-deepskyblue">
 </a>
 <a href="https://developer.apple.com/ios/" style="pointer-events: stroke;" target="_blank">
-<img src="https://img.shields.io/badge/platform-iOS-yellow">
+<img src="https://img.shields.io/badge/platform-iOS-deepskyblue">
 </a>
 <a href="" style="pointer-events: stroke;" target="_blank">
-<img src="https://img.shields.io/badge/platform-Web-yellow">
+<img src="https://img.shields.io/badge/platform-Web-deepskyblue">
 </a>
 <a href="" style="pointer-events: stroke;" target="_blank">
-<img src="https://img.shields.io/badge/platform-Mac-yellow">
+<img src="https://img.shields.io/badge/platform-Mac-deepskyblue">
 </a>
 <a href="" style="pointer-events: stroke;" target="_blank">
-<img src="https://img.shields.io/badge/platform-Linux-yellow">
+<img src="https://img.shields.io/badge/platform-Linux-deepskyblue">
 </a>
 <a href="" style="pointer-events: stroke;" target="_blank">
-<img src="https://img.shields.io/badge/platform-Windows-yellow">
+<img src="https://img.shields.io/badge/platform-Windows-deepskyblue">
 </a>
 <a href="https://www.codacy.com/gh/mohit-chauhan-mi/progressive_time_picker/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mohit-chauhan-mi/progressive_time_picker&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/dc683c9cc61b499fa7cdbf54e4d9ff35"/></a>
 <a href="https://github.com/Mindinventory/progressive_time_picker/blob/master/LICENSE" style="pointer-events: stroke;" target="_blank">
 <img src="https://img.shields.io/github/license/Mindinventory/progressive_time_picker"></a>
+<a href="https://pub.dev/packages/progressive_time_picker"><img src="https://img.shields.io/pub/v/progressive_time_picker?color=as&label=progressive_time_picker&logo=as1&logoColor=blue&style=social"></a>
+<a href="https://github.com/Mindinventory/progressive_time_picker"><img src="https://img.shields.io/github/stars/Mindinventory/progressive_time_picker?style=social" alt="MIT License"></a>
 
-
-A Customizable Progressive Time Picker for Flutter.
-This plugin allow us to customize time picker based on our requirements for selecting a specific range from time picker and it's supports multiple platforms.
+A Customizable Progressive Time Picker for Flutter. This package allow us to customize time picker
+based on our requirements for selecting a specific range from time picker and it's supports multiple
+platforms.
 
 ## Key Features
+
 * supports selection of both or single picker handler.
 * easy customization for decorating a time picker.
-* gives feature to show clock numbers in both 12 or 24 hours format and also supports customization for it.
+* gives feature to show clock numbers in both 12 or 24 hours format and also supports customization
+  for it.
 
 # Preview
+
 ![progressive_time_picker](https://github.com/Mindinventory/progressive_time_picker/blob/master/assets/timepicker.gif)
 
 ## Basic Usage
@@ -45,6 +50,7 @@ import 'package:progressive_time_picker/progressive_time_picker.dart';
 ```
 
 And add it in its most basic form like it:
+
 ```
   TimePicker(
     initTime: PickedTime(h: 0, m: 0),
@@ -60,6 +66,7 @@ And add it in its most basic form like it:
 
 ### Required parameters of TimePicker
 ------------
+
 | Parameter |  Description  |
 | ------------ |  ------------ |
 | PickedTime initTime | the init PickedTime value in the selection |
@@ -69,6 +76,7 @@ And add it in its most basic form like it:
 
 ### Optional parameters of TimePicker
 ------------
+
 | Parameter |  Default | Description  |
 | ------------ | ------------ | ------------ |
 | double height | 220 | height of the canvas |
@@ -82,6 +90,7 @@ And add it in its most basic form like it:
 
 ### Required parameters of TimePickerDecoration
 ------------
+
 | Parameter |  Description  |
 | ------------ | ------------ |
 | TimePickerSweepDecoration sweepDecoration | used to decorate our sweep part or a part between our init and end point with various options |
@@ -90,6 +99,7 @@ And add it in its most basic form like it:
 
 ### Optional parameters of TimePickerDecoration
 ------------
+
 | Parameter |  Default | Description  |
 | ------------ | ------------ | ------------ |
 | Color baseColor  | cyanAccent | defines the background color of the picker |
@@ -98,14 +108,16 @@ And add it in its most basic form like it:
 | TimePickerSectorDecoration secondarySectorsDecoration | - | used to decorate the secondary of out time picker |
 | TimePickerClockNumberDecoration clockNumberDecoration  | - |  Provides decoration options which will get applied to the internal clock's numbers when enable |
 
-
 ### Guideline for contributors
 ------------
-* Contribution towards our repository is always welcome, we request contributors to create a pull request for development.
+
+* Contribution towards our repository is always welcome, we request contributors to create a pull
+  request for development.
 
 ### Guideline to report an issue/feature request
 ------------
-It would be great for us if the reporter can share the below things to understand the root cause of the issue.
+It would be great for us if the reporter can share the below things to understand the root cause of
+the issue.
 
 * Library version
 * Code snippet
@@ -116,8 +128,11 @@ It would be great for us if the reporter can share the below things to understan
 
 LICENSE!
 ------------
-**progressive_time_picker** is [MIT-licensed.](https://github.com/Mindinventory/progressive_time_picker/blob/master/LICENSE)
+**progressive_time_picker**
+is [MIT-licensed.](https://github.com/Mindinventory/progressive_time_picker/blob/master/LICENSE)
 
 Let us know!
 ------------
-We’d be really happy if you send us links to your projects where you use our component. Just send an email to sales@mindinventory.com And do let us know if you have any questions or suggestion regarding our work.
+We’d be really happy if you send us links to your projects where you use our component. Just send an
+email to sales@mindinventory.com And do let us know if you have any questions or suggestion
+regarding our work.

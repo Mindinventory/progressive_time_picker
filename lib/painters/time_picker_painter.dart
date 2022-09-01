@@ -119,16 +119,14 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
   }
 
   void _calculatePaintData() {
-    var initPercent = valueToPercentage(
-        widget.init,
-        widget.pickerDecoration.clockNumberDecoration?.clockTimeFormat
-                .division ??
-            ClockTimeFormat.twentyFourHours.division);
-    var endPercent = valueToPercentage(
-        widget.end,
-        widget.pickerDecoration.clockNumberDecoration?.clockTimeFormat
-                .division ??
-            ClockTimeFormat.twentyFourHours.division);
+    var clockTimeDivision = getClockTimeFormatDivision(
+      widget.pickerDecoration.clockNumberDecoration?.clockTimeFormat ??
+          ClockTimeFormat.TWENTYFOURHOURS,
+      widget.pickerDecoration.clockNumberDecoration?.clockIncrementTimeFormat ??
+          ClockIncrementTimeFormat.FIVEMIN,
+    );
+    var initPercent = valueToPercentage(widget.init, clockTimeDivision);
+    var endPercent = valueToPercentage(widget.end, clockTimeDivision);
     var sweep = getSweepAngle(initPercent, endPercent);
 
     _startAngle = percentageToRadians(initPercent);
@@ -136,10 +134,11 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
     _sweepAngle = percentageToRadians(sweep.abs());
 
     _painter = PickerPainter(
-        startAngle: _startAngle,
-        endAngle: _endAngle,
-        sweepAngle: _sweepAngle,
-        pickerDecorator: widget.pickerDecoration);
+      startAngle: _startAngle,
+      endAngle: _endAngle,
+      sweepAngle: _sweepAngle,
+      pickerDecorator: widget.pickerDecoration,
+    );
   }
 
   void _onPanUpdate(Offset details) {
@@ -162,22 +161,21 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
 
     var angle = coordinatesToRadians(_painter.center, position);
     var percentage = radiansToPercentage(angle);
-    var newValue = percentageToValue(
-        percentage,
-        widget.pickerDecoration.clockNumberDecoration?.clockTimeFormat
-                .division ??
-            ClockTimeFormat.twentyFourHours.division);
+    var clockTimeDivision = getClockTimeFormatDivision(
+      widget.pickerDecoration.clockNumberDecoration?.clockTimeFormat ??
+          ClockTimeFormat.TWENTYFOURHOURS,
+      widget.pickerDecoration.clockNumberDecoration?.clockIncrementTimeFormat ??
+          ClockIncrementTimeFormat.FIVEMIN,
+    );
+
+    var newValue = percentageToValue(percentage, clockTimeDivision);
 
     if (isBothHandlersSelected) {
-      var newValueInit = (newValue - _differenceFromInitPoint) %
-          (widget.pickerDecoration.clockNumberDecoration?.clockTimeFormat
-                  .division ??
-              ClockTimeFormat.twentyFourHours.division);
+      var newValueInit =
+          (newValue - _differenceFromInitPoint) % clockTimeDivision;
       if (newValueInit != widget.init) {
-        var newValueEnd = (widget.end + (newValueInit - widget.init)) %
-            (widget.pickerDecoration.clockNumberDecoration?.clockTimeFormat
-                    .division ??
-                ClockTimeFormat.twentyFourHours.division);
+        var newValueEnd =
+            (widget.end + (newValueInit - widget.init)) % clockTimeDivision;
 
         widget.onSelectionChange(newValueInit, newValueEnd);
         if (isPanEnd) {
@@ -221,18 +219,29 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
         /// that means the user wants to move the selection as a whole
         if (isPointAlongCircle(position, _painter.center, _painter.radius)) {
           var angle = coordinatesToRadians(_painter.center, position);
-          if (isAngleInsideRadiansSelection(angle, _startAngle, _sweepAngle)) {
+          if (isAngleInsideRadiansSelection(
+            angle,
+            _startAngle,
+            _sweepAngle,
+            widget.pickerDecoration.clockNumberDecoration
+                    ?.clockIncrementTimeFormat ??
+                ClockIncrementTimeFormat.FIVEMIN,
+          )) {
             _isEndHandlerSelected = true;
             _isInitHandlerSelected = true;
             var positionPercentage = radiansToPercentage(angle);
+            var clockTimeDivision = getClockTimeFormatDivision(
+              widget.pickerDecoration.clockNumberDecoration?.clockTimeFormat ??
+                  ClockTimeFormat.TWENTYFOURHOURS,
+              widget.pickerDecoration.clockNumberDecoration
+                      ?.clockIncrementTimeFormat ??
+                  ClockIncrementTimeFormat.FIVEMIN,
+            );
 
             /// no need to account for negative values, that will be sorted out in the onPanUpdate
-            _differenceFromInitPoint = percentageToValue(
-                    positionPercentage,
-                    (widget.pickerDecoration.clockNumberDecoration
-                            ?.clockTimeFormat.division ??
-                        ClockTimeFormat.twentyFourHours.division)) -
-                widget.init;
+            _differenceFromInitPoint =
+                percentageToValue(positionPercentage, clockTimeDivision) -
+                    widget.init;
           }
         }
       }

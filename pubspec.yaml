@@ -1,7 +1,8 @@
 name: progressive_time_picker
-description: This plugin allow us to customize time picker based on our requirements for selecting a specific range from time picker and it's supports multiple platforms.
-version: 0.0.4
-homepage: https://github.com/Mindinventory/progressive_time_picker
+description: This package allow us to customize time picker based on our requirements for selecting a specific range from time picker and it's supports multiple platforms.
+version: 0.0.5
+repository: https://github.com/Mindinventory/progressive_time_picker
+issue_tracker: https://github.com/Mindinventory/progressive_time_picker/issues
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

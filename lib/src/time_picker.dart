@@ -80,29 +80,45 @@ class _TimePickerState extends State<TimePicker> {
   void initState() {
     super.initState();
     _init = pickedTimeToDivision(
-        pickedTime: widget.initTime,
-        clockTimeFormat:
-            widget.decoration?.clockNumberDecoration?.clockTimeFormat);
+      pickedTime: widget.initTime,
+      clockTimeFormat:
+          widget.decoration?.clockNumberDecoration?.clockTimeFormat ??
+              ClockTimeFormat.TWENTYFOURHOURS,
+      clockIncrementTimeFormat:
+          widget.decoration?.clockNumberDecoration?.clockIncrementTimeFormat ??
+              ClockIncrementTimeFormat.FIVEMIN,
+    );
     _end = pickedTimeToDivision(
-        pickedTime: widget.endTime,
-        clockTimeFormat:
-            widget.decoration?.clockNumberDecoration?.clockTimeFormat);
+      pickedTime: widget.endTime,
+      clockTimeFormat:
+          widget.decoration?.clockNumberDecoration?.clockTimeFormat ??
+              ClockTimeFormat.TWENTYFOURHOURS,
+      clockIncrementTimeFormat:
+          widget.decoration?.clockNumberDecoration?.clockIncrementTimeFormat ??
+              ClockIncrementTimeFormat.FIVEMIN,
+    );
   }
 
   TimePickerDecoration getDefaultPickerDecorator() {
     var startBox = TimePickerHandlerDecoration(
       color: Colors.lightBlue[900]!.withOpacity(0.6),
       shape: BoxShape.circle,
-      icon:
-          Icon(Icons.filter_tilt_shift, size: 30, color: Colors.lightBlue[700]),
+      icon: Icon(
+        Icons.filter_tilt_shift,
+        size: 30,
+        color: Colors.lightBlue[700],
+      ),
       useRoundedPickerCap: true,
     );
 
     var endBox = TimePickerHandlerDecoration(
       color: Colors.lightBlue[900]!.withOpacity(0.8),
       shape: BoxShape.circle,
-      icon:
-          Icon(Icons.filter_tilt_shift, size: 40, color: Colors.lightBlue[700]),
+      icon: Icon(
+        Icons.filter_tilt_shift,
+        size: 40,
+        color: Colors.lightBlue[700],
+      ),
       useRoundedPickerCap: true,
     );
 
@@ -117,7 +133,11 @@ class _TimePickerState extends State<TimePicker> {
     );
 
     var primarySectorDecoration = TimePickerSectorDecoration(
-        color: Colors.blue, width: 2, size: 8, useRoundedCap: false);
+      color: Colors.blue,
+      width: 2,
+      size: 8,
+      useRoundedCap: false,
+    );
 
     var secondarySectorDecoration = primarySectorDecoration.copyWith(
       color: Colors.lightBlue.withOpacity(0.5),
@@ -147,8 +167,18 @@ class _TimePickerState extends State<TimePicker> {
         secondarySectors: widget.secondarySectors ?? 0,
         child: widget.child ?? Container(),
         onSelectionChange: (newInit, newEnd) {
-          var inTime = formatTime(time: newInit);
-          var outTime = formatTime(time: newEnd);
+          var inTime = formatTime(
+            time: newInit,
+            incrementTimeFormat: widget.decoration?.clockNumberDecoration
+                    ?.clockIncrementTimeFormat ??
+                ClockIncrementTimeFormat.FIVEMIN,
+          );
+          var outTime = formatTime(
+            time: newEnd,
+            incrementTimeFormat: widget.decoration?.clockNumberDecoration
+                    ?.clockIncrementTimeFormat ??
+                ClockIncrementTimeFormat.FIVEMIN,
+          );
 
           widget.onSelectionChange(inTime, outTime);
 
@@ -158,8 +188,18 @@ class _TimePickerState extends State<TimePicker> {
           });
         },
         onSelectionEnd: (newInit, newEnd) {
-          var inTime = formatTime(time: newInit);
-          var outTime = formatTime(time: newEnd);
+          var inTime = formatTime(
+            time: newInit,
+            incrementTimeFormat: widget.decoration?.clockNumberDecoration
+                    ?.clockIncrementTimeFormat ??
+                ClockIncrementTimeFormat.FIVEMIN,
+          );
+          var outTime = formatTime(
+            time: newEnd,
+            incrementTimeFormat: widget.decoration?.clockNumberDecoration
+                    ?.clockIncrementTimeFormat ??
+                ClockIncrementTimeFormat.FIVEMIN,
+          );
 
           widget.onSelectionEnd(inTime, outTime);
         },
