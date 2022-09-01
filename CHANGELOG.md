@@ -1,3 +1,7 @@
+## 0.0.6
+
+* update details.
+
 ## 0.0.5
 
 * added support of Time Increment feature for the Time Picker inside the

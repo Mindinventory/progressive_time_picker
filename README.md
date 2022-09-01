@@ -21,7 +21,7 @@
 <img src="https://img.shields.io/badge/platform-Windows-deepskyblue">
 </a>
 <a href="https://www.codacy.com/gh/mohit-chauhan-mi/progressive_time_picker/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mohit-chauhan-mi/progressive_time_picker&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/dc683c9cc61b499fa7cdbf54e4d9ff35"/></a>
-<a href="https://github.com/Mindinventory/progressive_time_picker/blob/master/LICENSE" style="pointer-events: stroke;" target="_blank">
+<a href="https://github.com/Mindinventory/progressive_time_picker/blob/main/LICENSE" style="pointer-events: stroke;" target="_blank">
 <img src="https://img.shields.io/github/license/Mindinventory/progressive_time_picker"></a>
 <a href="https://pub.dev/packages/progressive_time_picker"><img src="https://img.shields.io/pub/v/progressive_time_picker?color=as&label=progressive_time_picker&logo=as1&logoColor=blue&style=social"></a>
 <a href="https://github.com/Mindinventory/progressive_time_picker"><img src="https://img.shields.io/github/stars/Mindinventory/progressive_time_picker?style=social" alt="MIT License"></a>
@@ -39,7 +39,7 @@ platforms.
 
 # Preview
 
-![progressive_time_picker](https://github.com/Mindinventory/progressive_time_picker/blob/master/assets/timepicker.gif)
+![progressive_time_picker](https://github.com/Mindinventory/progressive_time_picker/blob/main/assets/timepicker.gif)
 
 ## Basic Usage
 
@@ -129,7 +129,7 @@ the issue.
 LICENSE!
 ------------
 **progressive_time_picker**
-is [MIT-licensed.](https://github.com/Mindinventory/progressive_time_picker/blob/master/LICENSE)
+is [MIT-licensed.](https://github.com/Mindinventory/progressive_time_picker/blob/main/LICENSE)
 
 Let us know!
 ------------
