@@ -38,8 +38,13 @@ class _MyHomePageState extends State<MyHomePage> {
   PickedTime _outBedTime = PickedTime(h: 8, m: 0);
   PickedTime _intervalBedTime = PickedTime(h: 0, m: 0);
 
+  PickedTime _disabledInitTime = PickedTime(h: 12, m: 0);
+  PickedTime _disabledEndTime = PickedTime(h: 20, m: 0);
+
   double _sleepGoal = 8.0;
   bool _isSleepGoal = false;
+
+  bool? validRange = true;
 
   @override
   void initState() {
@@ -71,11 +76,17 @@ class _MyHomePageState extends State<MyHomePage> {
           TimePicker(
             initTime: _inBedTime,
             endTime: _outBedTime,
+            disabledRange: DisabledRange(
+              initTime: _disabledInitTime,
+              endTime: _disabledEndTime,
+              disabledRangeColor: Colors.grey,
+              errorColor: Colors.red,
+            ),
             height: 260.0,
             width: 260.0,
             onSelectionChange: _updateLabels,
-            onSelectionEnd: (a, b) => print(
-                'onSelectionEnd => init : ${a.h}:${a.m}, end : ${b.h}:${b.m}'),
+            onSelectionEnd: (start, end, valid) => print(
+                'onSelectionEnd => init : ${start.h}:${start.m}, end : ${end.h}:${end.m}, valid: $valid'),
             primarySectors: _clockTimeFormat.value,
             secondarySectors: _clockTimeFormat.value * 2,
             decoration: TimePickerDecoration(
@@ -155,7 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 _isSleepGoal
-                    ? "Above Sleep Goal (>=8) 😄"
+                    ? "Above Sleep Goal (>=8) 😇"
                     : 'below Sleep Goal (<=8) 😴',
                 style: TextStyle(
                   color: Colors.white,
@@ -187,6 +198,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ],
+          ),
+          SizedBox(
+            height: 18,
+            child: Text(
+              validRange == true
+                  ? "Working hours ${intl.NumberFormat('00').format(_disabledInitTime.h)}:${intl.NumberFormat('00').format(_disabledInitTime.m)} to ${intl.NumberFormat('00').format(_disabledEndTime.h)}:${intl.NumberFormat('00').format(_disabledEndTime.m)}"
+                  : "Please schedule according time working time!",
+              style: TextStyle(
+                fontSize: 16.0,
+                color: validRange == true ? Colors.white : Colors.red,
+              ),
+            ),
           ),
         ],
       ),
@@ -228,7 +251,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _updateLabels(PickedTime init, PickedTime end) {
+  void _updateLabels(PickedTime init, PickedTime end, bool? valid) {
     _inBedTime = init;
     _outBedTime = end;
     _intervalBedTime = formatIntervalTime(
@@ -244,6 +267,8 @@ class _MyHomePageState extends State<MyHomePage> {
       clockTimeFormat: _clockTimeFormat,
       clockIncrementTimeFormat: _clockIncrementTimeFormat,
     );
-    setState(() {});
+    setState(() {
+      validRange = valid;
+    });
   }
 }

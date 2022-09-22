@@ -5,11 +5,15 @@ import '../decoration/time_picker_decoration.dart';
 import 'base_time_painter.dart';
 import '../src/utils.dart';
 
-typedef SelectionChanged<T> = void Function(T a, T b);
+typedef SelectionChanged<T> = void Function(T a, T b, bool? valid);
 
 class TimePickerPainter extends StatefulWidget {
   final int init;
   final int end;
+  final int? disableTimeStart;
+  final int? disableTimeEnd;
+  final Color? disabledRangeColor;
+  final Color? errorColor;
   final int primarySectors;
   final int secondarySectors;
   final SelectionChanged<int> onSelectionChange;
@@ -22,6 +26,10 @@ class TimePickerPainter extends StatefulWidget {
   TimePickerPainter({
     required this.init,
     required this.end,
+    this.disableTimeStart,
+    this.disableTimeEnd,
+    this.disabledRangeColor,
+    this.errorColor,
     required this.child,
     required this.primarySectors,
     required this.secondarySectors,
@@ -58,6 +66,10 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
 
   /// the absolute angle in radians representing the selection
   late double _sweepAngle;
+
+  double? _disableTimeStartAngle;
+  double? _disableTimeEndAngle;
+  double? _disableSweepAngle;
 
   /// in case we have a double picker and we want to move the whole selection by clicking in the picker
   /// this will capture the position in the selection relative to the initial handler
@@ -133,11 +145,29 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
     _endAngle = percentageToRadians(endPercent);
     _sweepAngle = percentageToRadians(sweep.abs());
 
+    if (widget.disableTimeStart != null && widget.disableTimeEnd != null) {
+      var disableTimeInitPercentage =
+          valueToPercentage(widget.disableTimeStart!, clockTimeDivision);
+      var disableTimeEndPercentage =
+          valueToPercentage(widget.disableTimeEnd!, clockTimeDivision);
+      var disabledSweep =
+          getSweepAngle(disableTimeInitPercentage, disableTimeEndPercentage);
+
+      _disableTimeStartAngle = percentageToRadians(disableTimeInitPercentage);
+      _disableTimeEndAngle = percentageToRadians(disableTimeEndPercentage);
+      _disableSweepAngle = percentageToRadians(disabledSweep.abs());
+    }
+
     _painter = PickerPainter(
       startAngle: _startAngle,
       endAngle: _endAngle,
       sweepAngle: _sweepAngle,
       pickerDecorator: widget.pickerDecoration,
+      disableTimeStartAngle: _disableTimeStartAngle,
+      disableTimeEndAngle: _disableTimeEndAngle,
+      disabledSweepAngle: _disableSweepAngle,
+      disabledRangeColor: widget.disabledRangeColor,
+      errorColor: widget.errorColor,
     );
   }
 
@@ -177,9 +207,9 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
         var newValueEnd =
             (widget.end + (newValueInit - widget.init)) % clockTimeDivision;
 
-        widget.onSelectionChange(newValueInit, newValueEnd);
+        widget.onSelectionChange(newValueInit, newValueEnd, null);
         if (isPanEnd) {
-          widget.onSelectionEnd(newValueInit, newValueEnd);
+          widget.onSelectionEnd(newValueInit, newValueEnd, null);
         }
       }
       return;
@@ -187,14 +217,14 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
 
     /// isDoubleHandler but one handler was selected
     if (_isInitHandlerSelected) {
-      widget.onSelectionChange(newValue, widget.end);
+      widget.onSelectionChange(newValue, widget.end, null);
       if (isPanEnd) {
-        widget.onSelectionEnd(newValue, widget.end);
+        widget.onSelectionEnd(newValue, widget.end, null);
       }
     } else {
-      widget.onSelectionChange(widget.init, newValue);
+      widget.onSelectionChange(widget.init, newValue, null);
       if (isPanEnd) {
-        widget.onSelectionEnd(widget.init, newValue);
+        widget.onSelectionEnd(widget.init, newValue, null);
       }
     }
   }
