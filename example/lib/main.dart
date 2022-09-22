@@ -204,7 +204,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Text(
               validRange == true
                   ? "Working hours ${intl.NumberFormat('00').format(_disabledInitTime.h)}:${intl.NumberFormat('00').format(_disabledInitTime.m)} to ${intl.NumberFormat('00').format(_disabledEndTime.h)}:${intl.NumberFormat('00').format(_disabledEndTime.m)}"
-                  : "Please schedule according time working time!",
+                  : "Please schedule according working time!",
               style: TextStyle(
                 fontSize: 16.0,
                 color: validRange == true ? Colors.white : Colors.red,
