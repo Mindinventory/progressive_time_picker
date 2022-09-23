@@ -53,6 +53,12 @@ class TimePicker extends StatefulWidget {
   /// used to enabled or disabled Selection of End Handler
   final bool isEndHandlerSelectable;
 
+  /// used to disable Selection range, If null so there is no time range
+  final DisabledRange? disabledRange;
+
+  @override
+  _TimePickerState createState() => _TimePickerState();
+
   TimePicker({
     required this.initTime,
     required this.endTime,
@@ -66,15 +72,21 @@ class TimePicker extends StatefulWidget {
     this.secondarySectors,
     this.isInitHandlerSelectable = true,
     this.isEndHandlerSelectable = true,
+    this.disabledRange,
   });
-
-  @override
-  _TimePickerState createState() => _TimePickerState();
 }
 
 class _TimePickerState extends State<TimePicker> {
   int _init = 0;
   int _end = 0;
+
+  int? _disabledInit;
+  int? _disabledEnd;
+
+  DateTime? disabledStartTime;
+  DateTime? disabledEndTime;
+
+  bool? error;
 
   @override
   void initState() {
@@ -97,6 +109,32 @@ class _TimePickerState extends State<TimePicker> {
           widget.decoration?.clockNumberDecoration?.clockIncrementTimeFormat ??
               ClockIncrementTimeFormat.FIVEMIN,
     );
+
+    if (widget.disabledRange != null) {
+      disabledStartTime = getTime(widget.disabledRange!.initTime);
+      disabledEndTime = getTime(widget.disabledRange!.endTime);
+
+      _disabledInit = pickedTimeToDivision(
+        pickedTime: widget.disabledRange!.initTime,
+        clockTimeFormat:
+            widget.decoration?.clockNumberDecoration?.clockTimeFormat ??
+                ClockTimeFormat.TWENTYFOURHOURS,
+        clockIncrementTimeFormat: widget
+                .decoration?.clockNumberDecoration?.clockIncrementTimeFormat ??
+            ClockIncrementTimeFormat.FIVEMIN,
+      );
+      _disabledEnd = pickedTimeToDivision(
+        pickedTime: widget.disabledRange!.endTime,
+        clockTimeFormat:
+            widget.decoration?.clockNumberDecoration?.clockTimeFormat ??
+                ClockTimeFormat.TWENTYFOURHOURS,
+        clockIncrementTimeFormat: widget
+                .decoration?.clockNumberDecoration?.clockIncrementTimeFormat ??
+            ClockIncrementTimeFormat.FIVEMIN,
+      );
+
+      error = validateRange(widget.initTime, widget.endTime);
+    }
   }
 
   TimePickerDecoration getDefaultPickerDecorator() {
@@ -163,31 +201,43 @@ class _TimePickerState extends State<TimePicker> {
       child: TimePickerPainter(
         init: _init,
         end: _end,
+        disableTimeStart: _disabledInit,
+        disableTimeEnd: _disabledEnd,
+        disabledRangeColor: widget.disabledRange?.disabledRangeColor,
+        errorColor: widget.disabledRange?.errorColor,
         primarySectors: widget.primarySectors ?? 0,
         secondarySectors: widget.secondarySectors ?? 0,
         child: widget.child ?? Container(),
-        onSelectionChange: (newInit, newEnd) {
-          var inTime = formatTime(
+        onSelectionChange: (newInit, newEnd, isDisableRange) {
+          PickedTime inTime = formatTime(
             time: newInit,
             incrementTimeFormat: widget.decoration?.clockNumberDecoration
                     ?.clockIncrementTimeFormat ??
                 ClockIncrementTimeFormat.FIVEMIN,
           );
-          var outTime = formatTime(
+          PickedTime outTime = formatTime(
             time: newEnd,
             incrementTimeFormat: widget.decoration?.clockNumberDecoration
                     ?.clockIncrementTimeFormat ??
                 ClockIncrementTimeFormat.FIVEMIN,
           );
 
-          widget.onSelectionChange(inTime, outTime);
+          bool? _valid;
+
+          if (widget.disabledRange != null) {
+            _valid = validateRange(inTime, outTime);
+            widget.onSelectionChange(inTime, outTime, _valid);
+          } else {
+            widget.onSelectionChange(inTime, outTime, true);
+          }
 
           setState(() {
+            error = _valid;
             _init = newInit;
             _end = newEnd;
           });
         },
-        onSelectionEnd: (newInit, newEnd) {
+        onSelectionEnd: (newInit, newEnd, isDisableRange) {
           var inTime = formatTime(
             time: newInit,
             incrementTimeFormat: widget.decoration?.clockNumberDecoration
@@ -201,12 +251,95 @@ class _TimePickerState extends State<TimePicker> {
                 ClockIncrementTimeFormat.FIVEMIN,
           );
 
-          widget.onSelectionEnd(inTime, outTime);
+          if (widget.disabledRange != null) {
+            bool _valid = validateRange(inTime, outTime);
+            widget.onSelectionEnd(inTime, outTime, _valid);
+            if (_valid != error) {
+              setState(() {
+                error = _valid;
+              });
+            }
+          } else {
+            widget.onSelectionEnd(inTime, outTime, true);
+          }
         },
-        pickerDecoration: widget.decoration ?? getDefaultPickerDecorator(),
+        pickerDecoration: getDecoration() ?? getDefaultPickerDecorator(),
         isInitHandlerSelectable: widget.isInitHandlerSelectable,
         isEndHandlerSelectable: widget.isEndHandlerSelectable,
       ),
     );
   }
+
+  TimePickerDecoration? getDecoration() {
+    if (error == false) {
+      return widget.decoration?.copyWith(
+        sweepDecoration: widget.decoration?.sweepDecoration.copyWith(
+          pickerColor: widget.disabledRange?.errorColor ?? Colors.red,
+        ),
+      );
+    }
+    return widget.decoration;
+  }
+
+  bool validateRange(PickedTime newStart, PickedTime newEnd) {
+    DateTime _newStart = getTime(newStart);
+    DateTime _newEnd = getTime(newEnd);
+
+    if (_newStart.isAfter(_newEnd) || _newStart.isAtSameMomentAs(_newEnd)) {
+      if (disabledStartTime!.isAfter(_newStart) &&
+          disabledStartTime!
+              .isBefore(_newEnd.add(Duration(hours: widget.primarySectors!)))) {
+        return false;
+      }
+      if (disabledEndTime!.isAfter(_newStart) &&
+          disabledEndTime!
+              .isBefore(_newEnd.add(Duration(hours: widget.primarySectors!)))) {
+        return false;
+      }
+      _newStart = _newStart.add(Duration(hours: -widget.primarySectors!));
+    }
+    if (disabledStartTime!.isAfter(disabledEndTime!) ||
+        disabledStartTime!.isAtSameMomentAs(disabledEndTime!)) {
+      disabledStartTime =
+          disabledStartTime!.add(Duration(hours: -widget.primarySectors!));
+    }
+    if (_newStart.isAfter(disabledStartTime!) &&
+        _newStart.isBefore(disabledEndTime!)) {
+      return false;
+    }
+    if (_newEnd.isAfter(disabledStartTime!) &&
+        _newEnd.isBefore(disabledEndTime!)) {
+      return false;
+    }
+
+    if (disabledStartTime!.isAfter(_newStart) &&
+        disabledStartTime!.isBefore(_newEnd)) {
+      return false;
+    }
+    if (disabledEndTime!.isAfter(_newStart) &&
+        disabledEndTime!.isBefore(_newEnd)) {
+      return false;
+    }
+    return true;
+  }
+
+  DateTime getTime(PickedTime time) {
+    DateTime now = DateTime.now();
+    return DateTime(now.year, now.month, now.day,
+        time.h == 0 ? (widget.primarySectors!) : time.h, time.m);
+  }
+}
+
+class DisabledRange {
+  const DisabledRange({
+    required this.initTime,
+    required this.endTime,
+    this.disabledRangeColor,
+    this.errorColor,
+  });
+
+  final PickedTime initTime;
+  final PickedTime endTime;
+  final Color? disabledRangeColor;
+  final Color? errorColor;
 }

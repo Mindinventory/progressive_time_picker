@@ -1,3 +1,7 @@
+## 0.0.7
+
+* added support of Disable time range for the disable given selection
+
 ## 0.0.6
 
 * update details.

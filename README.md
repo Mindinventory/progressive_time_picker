@@ -40,6 +40,7 @@ platforms.
 # Preview
 
 ![progressive_time_picker](https://github.com/Mindinventory/progressive_time_picker/blob/main/assets/timepicker.gif)
+![progressive_time_picker](https://github.com/Mindinventory/progressive_time_picker/blob/main/assets/timepicker_range.gif)
 
 ## Basic Usage
 
@@ -51,16 +52,22 @@ import 'package:progressive_time_picker/progressive_time_picker.dart';
 
 And add it in its most basic form like it:
 
-```
+```dart
   TimePicker(
     initTime: PickedTime(h: 0, m: 0),
     endTime: PickedTime(h: 8, m: 0),
-    onSelectionChange: (a, b) =>
+    disabledRange: DisabledRange(
+      initTime: PickedTime(h: 12, m: 0),
+      endTime: PickedTime(h: 20, m: 0),
+      disabledRangeColor: Colors.grey,
+      errorColor: Colors.red,
+      ),
+    onSelectionChange: (start, end, isDisableRange) =>
         print(
-            'onSelectionChange => init : ${a.h}:${a.m}, end : ${b.h}:${b.m}'),
-    onSelectionEnd: (a, b) =>
+            'onSelectionChange => init : ${start.h}:${start.m}, end : ${end.h}:${end.m}, isDisableRangeRange: $isDisableRange'),
+    onSelectionEnd: (start, end, isDisableRange) =>
         print(
-            'onSelectionEnd => init : ${a.h}:${a.m}, end : ${b.h}:${b.m}'),
+            'onSelectionEnd => init : ${start.h}:${start.m}, end : ${end.h}:${end.m},, isDisableRangeRange: $isDisableRange'),
   );
 ```
 
@@ -87,6 +94,7 @@ And add it in its most basic form like it:
 | TimePickerDecoration decoration | - | used to decorate our TimePicker widget |
 | bool isInitHandlerSelectable | true | used to enabled or disabled Selection of Init Handler |
 | bool isEndHandlerSelectable | true | used to enabled or disabled Selection of End Handler |
+| DisabledRange disabledRange | null | used to disable the time range for the selection |
 
 ### Required parameters of TimePickerDecoration
 ------------
