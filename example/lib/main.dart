@@ -85,8 +85,8 @@ class _MyHomePageState extends State<MyHomePage> {
             height: 260.0,
             width: 260.0,
             onSelectionChange: _updateLabels,
-            onSelectionEnd: (start, end, valid) => print(
-                'onSelectionEnd => init : ${start.h}:${start.m}, end : ${end.h}:${end.m}, valid: $valid'),
+            onSelectionEnd: (start, end, isDisableRange) => print(
+                'onSelectionEnd => init : ${start.h}:${start.m}, end : ${end.h}:${end.m}, isDisableRange: $isDisableRange'),
             primarySectors: _clockTimeFormat.value,
             secondarySectors: _clockTimeFormat.value * 2,
             decoration: TimePickerDecoration(
@@ -251,7 +251,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _updateLabels(PickedTime init, PickedTime end, bool? valid) {
+  void _updateLabels(PickedTime init, PickedTime end, bool? isDisableRange) {
     _inBedTime = init;
     _outBedTime = end;
     _intervalBedTime = formatIntervalTime(
@@ -268,7 +268,7 @@ class _MyHomePageState extends State<MyHomePage> {
       clockIncrementTimeFormat: _clockIncrementTimeFormat,
     );
     setState(() {
-      validRange = valid;
+      validRange = isDisableRange;
     });
   }
 }

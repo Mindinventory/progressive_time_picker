@@ -208,7 +208,7 @@ class _TimePickerState extends State<TimePicker> {
         primarySectors: widget.primarySectors ?? 0,
         secondarySectors: widget.secondarySectors ?? 0,
         child: widget.child ?? Container(),
-        onSelectionChange: (newInit, newEnd, valid) {
+        onSelectionChange: (newInit, newEnd, isDisableRange) {
           PickedTime inTime = formatTime(
             time: newInit,
             incrementTimeFormat: widget.decoration?.clockNumberDecoration
@@ -237,7 +237,7 @@ class _TimePickerState extends State<TimePicker> {
             _end = newEnd;
           });
         },
-        onSelectionEnd: (newInit, newEnd, valid) {
+        onSelectionEnd: (newInit, newEnd, isDisableRange) {
           var inTime = formatTime(
             time: newInit,
             incrementTimeFormat: widget.decoration?.clockNumberDecoration
