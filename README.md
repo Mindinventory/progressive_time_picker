@@ -93,7 +93,7 @@ And add it in its most basic form like it:
 | TimePickerDecoration decoration | - | used to decorate our TimePicker widget |
 | bool isInitHandlerSelectable | true | used to enabled or disabled Selection of Init Handler |
 | bool isEndHandlerSelectable | true | used to enabled or disabled Selection of End Handler |
-| DisabledRange disabledRange | to disable the time range for the selection |
+| DisabledRange disabledRange | null | used to disable the time range for the selection |
 
 ### Required parameters of TimePickerDecoration
 ------------
