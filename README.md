@@ -52,7 +52,7 @@ import 'package:progressive_time_picker/progressive_time_picker.dart';
 
 And add it in its most basic form like it:
 
-```
+```dart
   TimePicker(
     initTime: PickedTime(h: 0, m: 0),
     endTime: PickedTime(h: 8, m: 0),
