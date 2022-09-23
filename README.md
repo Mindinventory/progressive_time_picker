@@ -40,6 +40,7 @@ platforms.
 # Preview
 
 ![progressive_time_picker](https://github.com/Mindinventory/progressive_time_picker/blob/main/assets/timepicker.gif)
+![progressive_time_picker](https://github.com/Mindinventory/progressive_time_picker/blob/main/assets/timepicker_range.gif)
 
 ## Basic Usage
 
