@@ -62,12 +62,12 @@ And add it in its most basic form like it:
       disabledRangeColor: Colors.grey,
       errorColor: Colors.red,
       ),
-    onSelectionChange: (start, end, valid) =>
+    onSelectionChange: (start, end, isDisableRange) =>
         print(
-            'onSelectionChange => init : ${start.h}:${start.m}, end : ${end.h}:${end.m}, validRange: $valid'),
-    onSelectionEnd: (start, end, valid) =>
+            'onSelectionChange => init : ${start.h}:${start.m}, end : ${end.h}:${end.m}, isDisableRangeRange: $isDisableRange'),
+    onSelectionEnd: (start, end, isDisableRange) =>
         print(
-            'onSelectionEnd => init : ${start.h}:${start.m}, end : ${end.h}:${end.m},, validRange: $valid'),
+            'onSelectionEnd => init : ${start.h}:${start.m}, end : ${end.h}:${end.m},, isDisableRangeRange: $isDisableRange'),
   );
 ```
 
