@@ -116,6 +116,23 @@ extension ClockTimeFormatExtension on ClockTimeFormat {
   }
 }
 
+enum HourIncrementTimeFormat { ONE, TWO, THREE, SIX }
+
+extension HourIncrementTimeFormatExtension on HourIncrementTimeFormat {
+  int get value {
+    switch (this) {
+      case HourIncrementTimeFormat.ONE:
+        return 1;
+      case HourIncrementTimeFormat.TWO:
+        return 2;
+      case HourIncrementTimeFormat.THREE:
+        return 3;
+      case HourIncrementTimeFormat.SIX:
+        return 6;
+    }
+  }
+}
+
 enum ClockIncrementTimeFormat {
   ONEMIN,
   TWOMIN,
