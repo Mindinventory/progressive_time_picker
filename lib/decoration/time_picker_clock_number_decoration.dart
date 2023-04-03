@@ -58,6 +58,10 @@ class TimePickerClockNumberDecoration {
   /// default value: [ClockIncrementTimeFormat.FIVEMIN]
   ClockIncrementTimeFormat clockIncrementTimeFormat;
 
+  ///Defines the hour count increment
+  /// default value: [HourIncrementTimeFormat.THREE]
+  HourIncrementTimeFormat hourIncrementTimeFormat;
+
   TimePickerClockNumberDecoration({
     this.clockTimeFormat = ClockTimeFormat.TWENTYFOURHOURS,
     this.clockIncrementTimeFormat = ClockIncrementTimeFormat.FIVEMIN,
@@ -70,6 +74,7 @@ class TimePickerClockNumberDecoration {
     this.style3,
     this.defaultFontSize = 18,
     this.defaultTextColor = Colors.black,
+    this.hourIncrementTimeFormat = HourIncrementTimeFormat.THREE,
   });
 
   /// this method will be call any time any style [style12, style9, style6, style3] is not defined

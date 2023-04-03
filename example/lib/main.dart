@@ -136,6 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 showNumberIndicators: true,
                 clockTimeFormat: _clockTimeFormat,
                 clockIncrementTimeFormat: _clockIncrementTimeFormat,
+                hourIncrementTimeFormat: HourIncrementTimeFormat.THREE
               ),
             ),
             child: Padding(
