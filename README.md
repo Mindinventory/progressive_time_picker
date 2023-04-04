@@ -46,11 +46,26 @@ platforms.
 
 Import it to your project file
 
-```
+```dart
 import 'package:progressive_time_picker/progressive_time_picker.dart';
 ```
 
 And add it in its most basic form like it:
+
+```dart
+  TimePicker(
+    initTime: PickedTime(h: 0, m: 0),
+    endTime: PickedTime(h: 8, m: 0),
+    onSelectionChange: (start, end, isDisableRange) =>
+        print(
+            'onSelectionChange => init : ${start.h}:${start.m}, end : ${end.h}:${end.m}, isDisableRangeRange: $isDisableRange'),
+    onSelectionEnd: (start, end, isDisableRange) =>
+        print(
+            'onSelectionEnd => init : ${start.h}:${start.m}, end : ${end.h}:${end.m},, isDisableRangeRange: $isDisableRange'),
+  );
+```
+
+And for the DisabledRange:
 
 ```dart
   TimePicker(
@@ -74,47 +89,47 @@ And add it in its most basic form like it:
 ### Required parameters of TimePicker
 ------------
 
-| Parameter |  Description  |
-| ------------ |  ------------ |
-| PickedTime initTime | the init PickedTime value in the selection |
-| PickedTime endTime | the end PickedTime value in the selection |
-| onSelectionChange  | callback function when init and end PickedTime change |
-| onSelectionEnd | callback function when init and end PickedTime finish |
+| Parameter           | Description                                           |
+|---------------------|-------------------------------------------------------|
+| PickedTime initTime | the init PickedTime value in the selection            |
+| PickedTime endTime  | the end PickedTime value in the selection             |
+| onSelectionChange   | callback function when init and end PickedTime change |
+| onSelectionEnd      | callback function when init and end PickedTime finish |
 
 ### Optional parameters of TimePicker
 ------------
 
-| Parameter |  Default | Description  |
-| ------------ | ------------ | ------------ |
-| double height | 220 | height of the canvas |
-| double width | 220 | width of the canvas |
-| int primarySectors | 0 | the number of primary sectors to be painted |
-| int secondarySectors | 0 | the number of secondary sectors to be painted |
-| Widget child | Container | widget that would be mounted inside the circle |
-| TimePickerDecoration decoration | - | used to decorate our TimePicker widget |
-| bool isInitHandlerSelectable | true | used to enabled or disabled Selection of Init Handler |
-| bool isEndHandlerSelectable | true | used to enabled or disabled Selection of End Handler |
-| DisabledRange disabledRange | null | used to disable the time range for the selection |
+| Parameter                       | Default   | Description                                           |
+|---------------------------------|-----------|-------------------------------------------------------|
+| double height                   | 220       | height of the canvas                                  |
+| double width                    | 220       | width of the canvas                                   |
+| int primarySectors              | 0         | the number of primary sectors to be painted           |
+| int secondarySectors            | 0         | the number of secondary sectors to be painted         |
+| Widget child                    | Container | widget that would be mounted inside the circle        |
+| TimePickerDecoration decoration | -         | used to decorate our TimePicker widget                |
+| bool isInitHandlerSelectable    | true      | used to enabled or disabled Selection of Init Handler |
+| bool isEndHandlerSelectable     | true      | used to enabled or disabled Selection of End Handler  |
+| DisabledRange disabledRange     | null      | used to disable the time range for the selection      |
 
 ### Required parameters of TimePickerDecoration
 ------------
 
-| Parameter |  Description  |
-| ------------ | ------------ |
-| TimePickerSweepDecoration sweepDecoration | used to decorate our sweep part or a part between our init and end point with various options |
-| TimePickerHandlerDecoration initHandlerDecoration  | used to decorate our init or end handler of time picker |
-| TimePickerHandlerDecoration endHandlerDecoration | used to decorate our init or end handler of time picker |
+| Parameter                                         | Description                                                                                   |
+|---------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| TimePickerSweepDecoration sweepDecoration         | used to decorate our sweep part or a part between our init and end point with various options |
+| TimePickerHandlerDecoration initHandlerDecoration | used to decorate our init or end handler of time picker                                       |
+| TimePickerHandlerDecoration endHandlerDecoration  | used to decorate our init or end handler of time picker                                       |
 
 ### Optional parameters of TimePickerDecoration
 ------------
 
-| Parameter |  Default | Description  |
-| ------------ | ------------ | ------------ |
-| Color baseColor  | cyanAccent | defines the background color of the picker |
-| double pickerBaseCirclePadding | 0.0 | to add extra padding for picker base or outer circle|
-| TimePickerSectorDecoration primarySectorsDecoration | - | used to decorate the primary sectors of out time picker |
-| TimePickerSectorDecoration secondarySectorsDecoration | - | used to decorate the secondary of out time picker |
-| TimePickerClockNumberDecoration clockNumberDecoration  | - |  Provides decoration options which will get applied to the internal clock's numbers when enable |
+| Parameter                                             | Default    | Description                                                                                    |
+|-------------------------------------------------------|------------|------------------------------------------------------------------------------------------------|
+| Color baseColor                                       | cyanAccent | defines the background color of the picker                                                     |
+| double pickerBaseCirclePadding                        | 0.0        | to add extra padding for picker base or outer circle                                           |
+| TimePickerSectorDecoration primarySectorsDecoration   | -          | used to decorate the primary sectors of out time picker                                        |
+| TimePickerSectorDecoration secondarySectorsDecoration | -          | used to decorate the secondary of out time picker                                              |
+| TimePickerClockNumberDecoration clockNumberDecoration | -          | Provides decoration options which will get applied to the internal clock's numbers when enable |
 
 ### Guideline for contributors
 ------------

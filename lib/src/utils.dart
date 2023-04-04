@@ -116,19 +116,27 @@ extension ClockTimeFormatExtension on ClockTimeFormat {
   }
 }
 
-enum HourIncrementTimeFormat { ONE, TWO, THREE, SIX }
+enum ClockIncrementHourFormat { ONE, TWO, THREE, FOUR, SIX, EIGHT, TWELVE, TWENTYFOUR }
 
-extension HourIncrementTimeFormatExtension on HourIncrementTimeFormat {
+extension ClockIncrementHourFormatExtension on ClockIncrementHourFormat {
   int get value {
     switch (this) {
-      case HourIncrementTimeFormat.ONE:
+      case ClockIncrementHourFormat.ONE:
         return 1;
-      case HourIncrementTimeFormat.TWO:
+      case ClockIncrementHourFormat.TWO:
         return 2;
-      case HourIncrementTimeFormat.THREE:
+      case ClockIncrementHourFormat.THREE:
         return 3;
-      case HourIncrementTimeFormat.SIX:
+      case ClockIncrementHourFormat.FOUR:
+        return 4;
+      case ClockIncrementHourFormat.SIX:
         return 6;
+      case ClockIncrementHourFormat.EIGHT:
+        return 8;
+      case ClockIncrementHourFormat.TWELVE:
+        return 12;
+      case ClockIncrementHourFormat.TWENTYFOUR:
+        return 24;
     }
   }
 }
