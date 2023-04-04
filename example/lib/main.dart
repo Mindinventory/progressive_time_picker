@@ -30,9 +30,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  ClockTimeFormat _clockTimeFormat = ClockTimeFormat.TWENTYFOURHOURS;
+  ClockTimeFormat _clockTimeFormat = ClockTimeFormat.twentyFourHours;
   ClockIncrementTimeFormat _clockIncrementTimeFormat =
-      ClockIncrementTimeFormat.FIVEMIN;
+      ClockIncrementTimeFormat.fiveMin;
 
   PickedTime _inBedTime = PickedTime(h: 0, m: 0);
   PickedTime _outBedTime = PickedTime(h: 8, m: 0);

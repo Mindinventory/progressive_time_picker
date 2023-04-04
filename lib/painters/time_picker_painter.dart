@@ -133,9 +133,9 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
   void _calculatePaintData() {
     var clockTimeDivision = getClockTimeFormatDivision(
       widget.pickerDecoration.clockNumberDecoration?.clockTimeFormat ??
-          ClockTimeFormat.TWENTYFOURHOURS,
+          ClockTimeFormat.twentyFourHours,
       widget.pickerDecoration.clockNumberDecoration?.clockIncrementTimeFormat ??
-          ClockIncrementTimeFormat.FIVEMIN,
+          ClockIncrementTimeFormat.fiveMin,
     );
     var initPercent = valueToPercentage(widget.init, clockTimeDivision);
     var endPercent = valueToPercentage(widget.end, clockTimeDivision);
@@ -193,9 +193,9 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
     var percentage = radiansToPercentage(angle);
     var clockTimeDivision = getClockTimeFormatDivision(
       widget.pickerDecoration.clockNumberDecoration?.clockTimeFormat ??
-          ClockTimeFormat.TWENTYFOURHOURS,
+          ClockTimeFormat.twentyFourHours,
       widget.pickerDecoration.clockNumberDecoration?.clockIncrementTimeFormat ??
-          ClockIncrementTimeFormat.FIVEMIN,
+          ClockIncrementTimeFormat.fiveMin,
     );
 
     var newValue = percentageToValue(percentage, clockTimeDivision);
@@ -255,17 +255,17 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
             _sweepAngle,
             widget.pickerDecoration.clockNumberDecoration
                     ?.clockIncrementTimeFormat ??
-                ClockIncrementTimeFormat.FIVEMIN,
+                ClockIncrementTimeFormat.fiveMin,
           )) {
             _isEndHandlerSelected = true;
             _isInitHandlerSelected = true;
             var positionPercentage = radiansToPercentage(angle);
             var clockTimeDivision = getClockTimeFormatDivision(
               widget.pickerDecoration.clockNumberDecoration?.clockTimeFormat ??
-                  ClockTimeFormat.TWENTYFOURHOURS,
+                  ClockTimeFormat.twentyFourHours,
               widget.pickerDecoration.clockNumberDecoration
                       ?.clockIncrementTimeFormat ??
-                  ClockIncrementTimeFormat.FIVEMIN,
+                  ClockIncrementTimeFormat.fiveMin,
             );
 
             /// no need to account for negative values, that will be sorted out in the onPanUpdate

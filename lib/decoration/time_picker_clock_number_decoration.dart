@@ -30,27 +30,27 @@ class TimePickerClockNumberDecoration {
   Color defaultTextColor;
 
   /// Defines the clock time format either twelveHours or twentyFourHours
-  /// default value: [ClockTimeFormat.TWENTYFOURHOURS]
+  /// default value: [ClockTimeFormat.twentyFourHours]
   ClockTimeFormat clockTimeFormat;
 
   /// Defines the clock time increment format
-  /// default value: [ClockIncrementTimeFormat.FIVEMIN]
+  /// default value: [ClockIncrementTimeFormat.fiveMin]
   ClockIncrementTimeFormat clockIncrementTimeFormat;
 
   /// Defines the clock hour increment count
-  /// default value: [ClockIncrementHourFormat.SIX]
+  /// default value: [ClockIncrementHourFormat.six]
   ClockIncrementHourFormat clockIncrementHourFormat;
 
   TimePickerClockNumberDecoration({
-    this.clockTimeFormat = ClockTimeFormat.TWENTYFOURHOURS,
-    this.clockIncrementTimeFormat = ClockIncrementTimeFormat.FIVEMIN,
+    this.clockTimeFormat = ClockTimeFormat.twentyFourHours,
+    this.clockIncrementTimeFormat = ClockIncrementTimeFormat.fiveMin,
     this.showNumberIndicators = true,
     this.textScaleFactor = 0.7,
     this.scaleFactor = 0.9,
     this.textStyle,
     this.defaultFontSize = 18,
     this.defaultTextColor = Colors.black,
-    this.clockIncrementHourFormat = ClockIncrementHourFormat.SIX,
+    this.clockIncrementHourFormat = ClockIncrementHourFormat.six,
   });
 
   /// this method will be call when [textStyle] is not defined
