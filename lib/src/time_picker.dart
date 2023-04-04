@@ -56,6 +56,10 @@ class TimePicker extends StatefulWidget {
   /// used to disable Selection range, If null so there is no time range
   final DisabledRange? disabledRange;
 
+  /// used to set priority to draw init or end handler on the top
+  /// default value: false
+  final bool drawInitHandlerOnTop;
+
   @override
   _TimePickerState createState() => _TimePickerState();
 
@@ -73,6 +77,7 @@ class TimePicker extends StatefulWidget {
     this.isInitHandlerSelectable = true,
     this.isEndHandlerSelectable = true,
     this.disabledRange,
+    this.drawInitHandlerOnTop = false,
   });
 }
 
@@ -266,6 +271,7 @@ class _TimePickerState extends State<TimePicker> {
         pickerDecoration: getDecoration() ?? getDefaultPickerDecorator(),
         isInitHandlerSelectable: widget.isInitHandlerSelectable,
         isEndHandlerSelectable: widget.isEndHandlerSelectable,
+        drawInitHandlerOnTop: widget.drawInitHandlerOnTop,
       ),
     );
   }

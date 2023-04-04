@@ -22,6 +22,7 @@ class TimePickerPainter extends StatefulWidget {
   final TimePickerDecoration pickerDecoration;
   final bool isInitHandlerSelectable;
   final bool isEndHandlerSelectable;
+  final bool drawInitHandlerOnTop;
 
   TimePickerPainter({
     required this.init,
@@ -38,6 +39,7 @@ class TimePickerPainter extends StatefulWidget {
     required this.pickerDecoration,
     required this.isInitHandlerSelectable,
     required this.isEndHandlerSelectable,
+    this.drawInitHandlerOnTop = false,
   });
 
   @override
@@ -168,6 +170,7 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
       disabledSweepAngle: _disableSweepAngle,
       disabledRangeColor: widget.disabledRangeColor,
       errorColor: widget.errorColor,
+      drawInitHandlerOnTop: widget.drawInitHandlerOnTop
     );
   }
 
@@ -203,7 +206,6 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
     if (isBothHandlersSelected) {
       var newValueInit =
           (newValue - _differenceFromInitPoint) % clockTimeDivision;
-      if (newValueInit != widget.init) {
         var newValueEnd =
             (widget.end + (newValueInit - widget.init)) % clockTimeDivision;
 
@@ -211,7 +213,6 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
         if (isPanEnd) {
           widget.onSelectionEnd(newValueInit, newValueEnd, null);
         }
-      }
       return;
     }
 

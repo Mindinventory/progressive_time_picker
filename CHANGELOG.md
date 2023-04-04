@@ -1,6 +1,8 @@
 ## 0.0.8
 
 * Add an option to show more clock numbers using ClockIncrementHourFormat.
+* Fixed Bug for onSelectionEnd was not triggered when bothHandler moves.
+* Add an bool flag to draw init or end handler on the top.
 * Updated package details.
 
 ## 0.0.7

@@ -99,17 +99,18 @@ And for the DisabledRange:
 ### Optional parameters of TimePicker
 ------------
 
-| Parameter                       | Default   | Description                                           |
-|---------------------------------|-----------|-------------------------------------------------------|
-| double height                   | 220       | height of the canvas                                  |
-| double width                    | 220       | width of the canvas                                   |
-| int primarySectors              | 0         | the number of primary sectors to be painted           |
-| int secondarySectors            | 0         | the number of secondary sectors to be painted         |
-| Widget child                    | Container | widget that would be mounted inside the circle        |
-| TimePickerDecoration decoration | -         | used to decorate our TimePicker widget                |
-| bool isInitHandlerSelectable    | true      | used to enabled or disabled Selection of Init Handler |
-| bool isEndHandlerSelectable     | true      | used to enabled or disabled Selection of End Handler  |
-| DisabledRange disabledRange     | null      | used to disable the time range for the selection      |
+| Parameter                       | Default   | Description                                                 |
+|---------------------------------|-----------|-------------------------------------------------------------|
+| double height                   | 220       | height of the canvas                                        |
+| double width                    | 220       | width of the canvas                                         |
+| int primarySectors              | 0         | the number of primary sectors to be painted                 |
+| int secondarySectors            | 0         | the number of secondary sectors to be painted               |
+| Widget child                    | Container | widget that would be mounted inside the circle              |
+| TimePickerDecoration decoration | -         | used to decorate our TimePicker widget                      |
+| bool isInitHandlerSelectable    | true      | used to enabled or disabled Selection of Init Handler       |
+| bool isEndHandlerSelectable     | true      | used to enabled or disabled Selection of End Handler        |
+| DisabledRange disabledRange     | null      | used to disable the time range for the selection            |
+| bool drawInitHandlerOnTop       | false     | used to set priority to draw init or end handler on the top |
 
 ### Required parameters of TimePickerDecoration
 ------------
