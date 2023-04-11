@@ -124,13 +124,14 @@ And for the DisabledRange:
 ### Optional parameters of TimePickerDecoration
 ------------
 
-| Parameter                                             | Default    | Description                                                                                    |
-|-------------------------------------------------------|------------|------------------------------------------------------------------------------------------------|
-| Color baseColor                                       | cyanAccent | defines the background color of the picker                                                     |
-| double pickerBaseCirclePadding                        | 0.0        | to add extra padding for picker base or outer circle                                           |
-| TimePickerSectorDecoration primarySectorsDecoration   | -          | used to decorate the primary sectors of out time picker                                        |
-| TimePickerSectorDecoration secondarySectorsDecoration | -          | used to decorate the secondary of out time picker                                              |
-| TimePickerClockNumberDecoration clockNumberDecoration | -          | Provides decoration options which will get applied to the internal clock's numbers when enable |
+| Parameter                                             | Default                  | Description                                                                                    |
+|-------------------------------------------------------|--------------------------|------------------------------------------------------------------------------------------------|
+| Color baseColor                                       | cyanAccent               | defines the background color of the picker                                                     |
+| double pickerBaseCirclePadding                        | 0.0                      | to add extra padding for picker base or outer circle                                           |
+| TimePickerSectorDecoration primarySectorsDecoration   | -                        | used to decorate the primary sectors of out time picker                                        |
+| TimePickerSectorDecoration secondarySectorsDecoration | -                        | used to decorate the secondary of out time picker                                              |
+| TimePickerClockNumberDecoration clockNumberDecoration | -                        | Provides decoration options which will get applied to the internal clock's numbers when enable |
+| SystemMouseCursor mouseCursorForWeb                   | SystemMouseCursors.click | Used to set SystemMouseCursor for PanGestureRecognizer only on WEB                             |
 
 ### Guideline for contributors
 ------------
