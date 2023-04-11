@@ -116,34 +116,32 @@ class BaseTimePainter extends CustomPainter {
     TimePickerClockNumberDecoration decoration,
     ClockTimeFormat clockTimeFormat,
   ) {
-    double p = 32.0;
+    int getIncrementCount = 15 *
+        (24 ~/ decoration.clockTimeFormat.value) *
+        decoration.clockIncrementHourFormat.value;
 
-    Offset paddingX = Offset(p * decoration.scaleFactor, 0.0);
-    Offset paddingY = Offset(0.0, p * decoration.scaleFactor);
+    var centerX = size.width / 2;
+    var centerY = size.height / 2;
 
-    var tp12 = getIndicatorText(
-      '${clockTimeFormat.value}',
-      decoration.style12 ?? decoration.getDefaultTextStyle(),
-    );
-    tp12.paint(canvas, size.topCenter(-tp12.size.topCenter(-paddingY)));
-
-    var tp9 = getIndicatorText(
-      clockTimeFormat == ClockTimeFormat.TWENTYFOURHOURS ? '18' : '9',
-      decoration.style9 ?? decoration.getDefaultTextStyle(),
-    );
-    tp9.paint(canvas, size.centerLeft(-tp9.size.centerLeft(-paddingX)));
-
-    var tp6 = getIndicatorText(
-      "${clockTimeFormat.value ~/ 2}",
-      decoration.style6 ?? decoration.getDefaultTextStyle(),
-    );
-    tp6.paint(canvas, size.bottomCenter(-tp6.size.bottomCenter(paddingY)));
-
-    var tp3 = getIndicatorText(
-      "${clockTimeFormat.value ~/ 4}",
-      decoration.style3 ?? decoration.getDefaultTextStyle(),
-    );
-    tp3.paint(canvas, size.centerRight(-tp3.size.centerRight(paddingX)));
+    for (int i = 0; i < 360; i = i + getIncrementCount) {
+      var x1 = centerX + (centerX * 0.42) * sin(i * pi / 180);
+      var y1 = -centerY + (centerX * 0.42) * cos(i * pi / 180);
+      var tp = getIndicatorText(
+        i == 0
+            ? decoration.clockTimeFormat.value
+            : ((i / 15) * (decoration.clockTimeFormat.value / 24)).toInt(),
+        decoration.textStyle ??
+            decoration.getDefaultTextStyle().copyWith(
+                  fontSize: decoration.clockIncrementHourFormat.value == 1
+                      ? 10
+                      : (decoration.defaultFontSize *
+                          decoration.scaleFactor *
+                          decoration.textScaleFactor),
+                ),
+      );
+      tp.layout();
+      tp.paint(canvas, Offset(x1 - (tp.width / 2), -y1 - (tp.height / 2)));
+    }
   }
 
   Paint _getPaint({
@@ -158,9 +156,9 @@ class BaseTimePainter extends CustomPainter {
         ..style = style ?? PaintingStyle.stroke
         ..strokeWidth = width ?? pickerStrokeWidth;
 
-  TextPainter getIndicatorText(String text, TextStyle style) {
+  TextPainter getIndicatorText(var text, TextStyle style) {
     TextPainter tp6 = TextPainter(
-      text: TextSpan(style: style, text: text),
+      text: TextSpan(style: style, text: text.toString()),
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr,
     );

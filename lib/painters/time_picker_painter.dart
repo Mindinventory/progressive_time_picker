@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../painters/picker_painter.dart';
@@ -22,6 +23,7 @@ class TimePickerPainter extends StatefulWidget {
   final TimePickerDecoration pickerDecoration;
   final bool isInitHandlerSelectable;
   final bool isEndHandlerSelectable;
+  final bool drawInitHandlerOnTop;
 
   TimePickerPainter({
     required this.init,
@@ -38,6 +40,7 @@ class TimePickerPainter extends StatefulWidget {
     required this.pickerDecoration,
     required this.isInitHandlerSelectable,
     required this.isEndHandlerSelectable,
+    this.drawInitHandlerOnTop = false,
   });
 
   @override
@@ -113,18 +116,23 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
           (CustomPanGestureRecognizer instance) {},
         ),
       },
-      child: CustomPaint(
-        painter: BaseTimePainter(
-          decoration: widget.pickerDecoration,
-          primarySectors: widget.primarySectors,
-          secondarySectors: widget.secondarySectors,
-          pickerStrokeWidth:
-              widget.pickerDecoration.sweepDecoration.pickerStrokeWidth,
-        ),
-        foregroundPainter: _painter,
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: widget.child,
+      child: MouseRegion(
+        cursor: kIsWeb
+            ? widget.pickerDecoration.mouseCursorForWeb
+            : SystemMouseCursors.none,
+        child: CustomPaint(
+          painter: BaseTimePainter(
+            decoration: widget.pickerDecoration,
+            primarySectors: widget.primarySectors,
+            secondarySectors: widget.secondarySectors,
+            pickerStrokeWidth:
+                widget.pickerDecoration.sweepDecoration.pickerStrokeWidth,
+          ),
+          foregroundPainter: _painter,
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: widget.child,
+          ),
         ),
       ),
     );
@@ -133,9 +141,9 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
   void _calculatePaintData() {
     var clockTimeDivision = getClockTimeFormatDivision(
       widget.pickerDecoration.clockNumberDecoration?.clockTimeFormat ??
-          ClockTimeFormat.TWENTYFOURHOURS,
+          ClockTimeFormat.twentyFourHours,
       widget.pickerDecoration.clockNumberDecoration?.clockIncrementTimeFormat ??
-          ClockIncrementTimeFormat.FIVEMIN,
+          ClockIncrementTimeFormat.fiveMin,
     );
     var initPercent = valueToPercentage(widget.init, clockTimeDivision);
     var endPercent = valueToPercentage(widget.end, clockTimeDivision);
@@ -168,6 +176,7 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
       disabledSweepAngle: _disableSweepAngle,
       disabledRangeColor: widget.disabledRangeColor,
       errorColor: widget.errorColor,
+      drawInitHandlerOnTop: widget.drawInitHandlerOnTop,
     );
   }
 
@@ -193,9 +202,9 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
     var percentage = radiansToPercentage(angle);
     var clockTimeDivision = getClockTimeFormatDivision(
       widget.pickerDecoration.clockNumberDecoration?.clockTimeFormat ??
-          ClockTimeFormat.TWENTYFOURHOURS,
+          ClockTimeFormat.twentyFourHours,
       widget.pickerDecoration.clockNumberDecoration?.clockIncrementTimeFormat ??
-          ClockIncrementTimeFormat.FIVEMIN,
+          ClockIncrementTimeFormat.fiveMin,
     );
 
     var newValue = percentageToValue(percentage, clockTimeDivision);
@@ -203,14 +212,12 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
     if (isBothHandlersSelected) {
       var newValueInit =
           (newValue - _differenceFromInitPoint) % clockTimeDivision;
-      if (newValueInit != widget.init) {
-        var newValueEnd =
-            (widget.end + (newValueInit - widget.init)) % clockTimeDivision;
+      var newValueEnd =
+          (widget.end + (newValueInit - widget.init)) % clockTimeDivision;
 
-        widget.onSelectionChange(newValueInit, newValueEnd, null);
-        if (isPanEnd) {
-          widget.onSelectionEnd(newValueInit, newValueEnd, null);
-        }
+      widget.onSelectionChange(newValueInit, newValueEnd, null);
+      if (isPanEnd) {
+        widget.onSelectionEnd(newValueInit, newValueEnd, null);
       }
       return;
     }
@@ -255,17 +262,17 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
             _sweepAngle,
             widget.pickerDecoration.clockNumberDecoration
                     ?.clockIncrementTimeFormat ??
-                ClockIncrementTimeFormat.FIVEMIN,
+                ClockIncrementTimeFormat.fiveMin,
           )) {
             _isEndHandlerSelected = true;
             _isInitHandlerSelected = true;
             var positionPercentage = radiansToPercentage(angle);
             var clockTimeDivision = getClockTimeFormatDivision(
               widget.pickerDecoration.clockNumberDecoration?.clockTimeFormat ??
-                  ClockTimeFormat.TWENTYFOURHOURS,
+                  ClockTimeFormat.twentyFourHours,
               widget.pickerDecoration.clockNumberDecoration
                       ?.clockIncrementTimeFormat ??
-                  ClockIncrementTimeFormat.FIVEMIN,
+                  ClockIncrementTimeFormat.fiveMin,
             );
 
             /// no need to account for negative values, that will be sorted out in the onPanUpdate

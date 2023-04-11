@@ -101,62 +101,100 @@ bool isAngleInsideRadiansSelection(
 }
 
 enum ClockTimeFormat {
-  TWELVEHOURS,
-  TWENTYFOURHOURS,
+  twelveHours,
+  twentyFourHours,
 }
 
 extension ClockTimeFormatExtension on ClockTimeFormat {
   int get value {
     switch (this) {
-      case ClockTimeFormat.TWELVEHOURS:
+      case ClockTimeFormat.twelveHours:
         return 12;
-      case ClockTimeFormat.TWENTYFOURHOURS:
+      case ClockTimeFormat.twentyFourHours:
         return 24;
     }
   }
 }
 
+/// The 24 hours is divisible by
+/// 1, 2, 3, 4, 6, 8, 12, and 24.
+enum ClockIncrementHourFormat {
+  one,
+  two,
+  three,
+  four,
+  six,
+  eight,
+  twelve,
+  twentyFour,
+}
+
+extension ClockIncrementHourFormatExtension on ClockIncrementHourFormat {
+  int get value {
+    switch (this) {
+      case ClockIncrementHourFormat.one:
+        return 1;
+      case ClockIncrementHourFormat.two:
+        return 2;
+      case ClockIncrementHourFormat.three:
+        return 3;
+      case ClockIncrementHourFormat.four:
+        return 4;
+      case ClockIncrementHourFormat.six:
+        return 6;
+      case ClockIncrementHourFormat.eight:
+        return 8;
+      case ClockIncrementHourFormat.twelve:
+        return 12;
+      case ClockIncrementHourFormat.twentyFour:
+        return 24;
+    }
+  }
+}
+
+/// The 60 minute is divisible by
+/// 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, and 60.
 enum ClockIncrementTimeFormat {
-  ONEMIN,
-  TWOMIN,
-  THREEMIN,
-  FOURMIN,
-  FIVEMIN,
-  SIXMIN,
-  TENMIN,
-  TWELVEMIN,
-  FIFTEENMIN,
-  TWENTYMIN,
-  THIRTYMIN,
-  SIXTYMIN,
+  oneMin,
+  twoMin,
+  threeMin,
+  fourMin,
+  fiveMin,
+  sixMin,
+  tenMin,
+  twelveMin,
+  fifteenMin,
+  twentyMin,
+  thirtyMin,
+  sixtyMin,
 }
 
 extension ClockIncrementTimeFormatExtension on ClockIncrementTimeFormat {
   int get value {
     switch (this) {
-      case ClockIncrementTimeFormat.ONEMIN:
+      case ClockIncrementTimeFormat.oneMin:
         return 1;
-      case ClockIncrementTimeFormat.TWOMIN:
+      case ClockIncrementTimeFormat.twoMin:
         return 2;
-      case ClockIncrementTimeFormat.THREEMIN:
+      case ClockIncrementTimeFormat.threeMin:
         return 3;
-      case ClockIncrementTimeFormat.FOURMIN:
+      case ClockIncrementTimeFormat.fourMin:
         return 4;
-      case ClockIncrementTimeFormat.FIVEMIN:
+      case ClockIncrementTimeFormat.fiveMin:
         return 5;
-      case ClockIncrementTimeFormat.SIXMIN:
+      case ClockIncrementTimeFormat.sixMin:
         return 6;
-      case ClockIncrementTimeFormat.TENMIN:
+      case ClockIncrementTimeFormat.tenMin:
         return 10;
-      case ClockIncrementTimeFormat.TWELVEMIN:
+      case ClockIncrementTimeFormat.twelveMin:
         return 12;
-      case ClockIncrementTimeFormat.FIFTEENMIN:
+      case ClockIncrementTimeFormat.fifteenMin:
         return 15;
-      case ClockIncrementTimeFormat.TWENTYMIN:
+      case ClockIncrementTimeFormat.twentyMin:
         return 20;
-      case ClockIncrementTimeFormat.THIRTYMIN:
+      case ClockIncrementTimeFormat.thirtyMin:
         return 30;
-      case ClockIncrementTimeFormat.SIXTYMIN:
+      case ClockIncrementTimeFormat.sixtyMin:
         return 60;
     }
   }
@@ -166,8 +204,6 @@ int getClockTimeFormatDivision(
   ClockTimeFormat clockTimeFormat,
   ClockIncrementTimeFormat incrementTimeFormat,
 ) {
-  /// The 60 minute is divisible by
-  /// 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, and 60.
   var timeDivisor = 60 ~/ incrementTimeFormat.value;
   return (timeDivisor * clockTimeFormat.value);
 }
@@ -198,9 +234,9 @@ PickedTime formatTime({
 PickedTime formatIntervalTime({
   required PickedTime init,
   required PickedTime end,
-  ClockTimeFormat clockTimeFormat = ClockTimeFormat.TWENTYFOURHOURS,
+  ClockTimeFormat clockTimeFormat = ClockTimeFormat.twentyFourHours,
   ClockIncrementTimeFormat clockIncrementTimeFormat =
-      ClockIncrementTimeFormat.FIVEMIN,
+      ClockIncrementTimeFormat.fiveMin,
 }) {
   var clockTimeDivision = getClockTimeFormatDivision(
     clockTimeFormat,
@@ -235,9 +271,9 @@ bool validateSleepGoal({
   required PickedTime inTime,
   required PickedTime outTime,
   required double sleepGoal,
-  ClockTimeFormat clockTimeFormat = ClockTimeFormat.TWENTYFOURHOURS,
+  ClockTimeFormat clockTimeFormat = ClockTimeFormat.twentyFourHours,
   ClockIncrementTimeFormat clockIncrementTimeFormat =
-      ClockIncrementTimeFormat.FIVEMIN,
+      ClockIncrementTimeFormat.fiveMin,
 }) {
   var clockTimeDivision = getClockTimeFormatDivision(
     clockTimeFormat,

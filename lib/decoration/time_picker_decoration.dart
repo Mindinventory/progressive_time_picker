@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../decoration/time_picker_clock_number_decoration.dart';
 import '../decoration/time_picker_sector_decoration.dart';
 import '../decoration/time_picker_handler_decoration.dart';
@@ -46,6 +47,10 @@ class TimePickerDecoration {
   /// See also: TimePickerHandlerDecoration
   final TimePickerHandlerDecoration endHandlerDecoration;
 
+  /// Used to set SystemMouseCursor for PanGestureRecognizer only on WEB
+  /// default value: [SystemMouseCursors.click]
+  final SystemMouseCursor mouseCursorForWeb;
+
   TimePickerDecoration({
     required this.sweepDecoration,
     required this.initHandlerDecoration,
@@ -55,6 +60,7 @@ class TimePickerDecoration {
     this.primarySectorsDecoration,
     this.secondarySectorsDecoration,
     this.clockNumberDecoration,
+    this.mouseCursorForWeb = SystemMouseCursors.click,
   });
 
   TimePickerDecoration copyWith({
