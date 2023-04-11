@@ -14,33 +14,12 @@ class TimePickerClockNumberDecoration {
   /// default value: 0.9
   final double scaleFactor;
 
-  /// Optional Style to be applied to the the "12" or "24" number in the clock when clock is enable
+  /// Optional Style to be applied to the the clock number in the clock when clock is enable
   /// if not need then set color to transparent
   /// default value: NULL
   /// See also:
   /// * getDefaultTextStyle
-  TextStyle? style12;
-
-  /// Optional Style to be applied to the the "9" or "18" number in the clock when clock is enable
-  /// if not need then set color to transparent
-  /// default value: NULL
-  /// See also:
-  /// * getDefaultTextStyle
-  TextStyle? style9;
-
-  /// Optional Style to be applied to the the "6" or "12" number in the clock when clock is enable
-  /// if not need then set color to transparent
-  /// default value: NULL
-  /// See also:
-  /// * getDefaultTextStyle
-  TextStyle? style6;
-
-  /// Optional Style to be applied to the the "3" or "6" number in the clock when clock is enable
-  /// if not need then set color to transparent
-  /// default value: NULL
-  /// See also:
-  /// * getDefaultTextStyle
-  TextStyle? style3;
+  TextStyle? textStyle;
 
   /// Optional, defines the font size to use when the a Style is not define,
   /// default value: 18
@@ -51,33 +30,30 @@ class TimePickerClockNumberDecoration {
   Color defaultTextColor;
 
   /// Defines the clock time format either twelveHours or twentyFourHours
-  /// default value: [ClockTimeFormat.TWENTYFOURHOURS]
+  /// default value: [ClockTimeFormat.twentyFourHours]
   ClockTimeFormat clockTimeFormat;
 
   /// Defines the clock time increment format
-  /// default value: [ClockIncrementTimeFormat.FIVEMIN]
+  /// default value: [ClockIncrementTimeFormat.fiveMin]
   ClockIncrementTimeFormat clockIncrementTimeFormat;
 
-  ///Defines the hour count increment
-  /// default value: [HourIncrementTimeFormat.THREE]
-  HourIncrementTimeFormat hourIncrementTimeFormat;
+  /// Defines the clock hour increment count
+  /// default value: [ClockIncrementHourFormat.six]
+  ClockIncrementHourFormat clockIncrementHourFormat;
 
   TimePickerClockNumberDecoration({
-    this.clockTimeFormat = ClockTimeFormat.TWENTYFOURHOURS,
-    this.clockIncrementTimeFormat = ClockIncrementTimeFormat.FIVEMIN,
+    this.clockTimeFormat = ClockTimeFormat.twentyFourHours,
+    this.clockIncrementTimeFormat = ClockIncrementTimeFormat.fiveMin,
     this.showNumberIndicators = true,
     this.textScaleFactor = 0.7,
     this.scaleFactor = 0.9,
-    this.style12,
-    this.style9,
-    this.style6,
-    this.style3,
+    this.textStyle,
     this.defaultFontSize = 18,
     this.defaultTextColor = Colors.black,
-    this.hourIncrementTimeFormat = HourIncrementTimeFormat.THREE,
+    this.clockIncrementHourFormat = ClockIncrementHourFormat.six,
   });
 
-  /// this method will be call any time any style [style12, style9, style6, style3] is not defined
+  /// this method will be call when [textStyle] is not defined
   /// [defaultFontSize] Optional, defines the font size to use when the a Style is not define,
   /// default value: 18
   /// [defaultTextColor] Optional, defines the main color to get use when the a Style is not define,
@@ -87,15 +63,6 @@ class TimePickerClockNumberDecoration {
       color: defaultTextColor,
       fontWeight: FontWeight.bold,
       fontSize: defaultFontSize * scaleFactor * textScaleFactor,
-    );
-  }
-
-  TimePickerClockNumberDecoration getDefaultDecoration() {
-    return TimePickerClockNumberDecoration(
-      style12: getDefaultTextStyle(),
-      style6: getDefaultTextStyle(),
-      style9: getDefaultTextStyle(),
-      style3: getDefaultTextStyle(),
     );
   }
 }

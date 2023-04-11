@@ -118,7 +118,7 @@ class BaseTimePainter extends CustomPainter {
   ) {
     int getIncrementCount = 15 *
         (24 ~/ decoration.clockTimeFormat.value) *
-        decoration.hourIncrementTimeFormat.value;
+        decoration.clockIncrementHourFormat.value;
 
     var centerX = size.width / 2;
     var centerY = size.height / 2;
@@ -127,13 +127,18 @@ class BaseTimePainter extends CustomPainter {
       var x1 = centerX + (centerX * 0.42) * sin(i * pi / 180);
       var y1 = -centerY + (centerX * 0.42) * cos(i * pi / 180);
       var tp = getIndicatorText(
-          i == 0
-              ? decoration.clockTimeFormat.value
-              : ((i / 15) * (decoration.clockTimeFormat.value / 24)).toInt(),
-          decoration.style12 ??
-              decoration.getDefaultTextStyle().copyWith(
-                  fontSize:
-                      decoration.hourIncrementTimeFormat.value == 1 ? 10 : 12));
+        i == 0
+            ? decoration.clockTimeFormat.value
+            : ((i / 15) * (decoration.clockTimeFormat.value / 24)).toInt(),
+        decoration.textStyle ??
+            decoration.getDefaultTextStyle().copyWith(
+                  fontSize: decoration.clockIncrementHourFormat.value == 1
+                      ? 10
+                      : (decoration.defaultFontSize *
+                          decoration.scaleFactor *
+                          decoration.textScaleFactor),
+                ),
+      );
       tp.layout();
       tp.paint(canvas, Offset(x1 - (tp.width / 2), -y1 - (tp.height / 2)));
     }

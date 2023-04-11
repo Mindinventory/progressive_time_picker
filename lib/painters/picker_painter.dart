@@ -14,6 +14,7 @@ class PickerPainter extends CustomPainter {
   double? disabledSweepAngle;
   Color? disabledRangeColor;
   Color? errorColor;
+  bool drawInitHandlerOnTop;
 
   Offset _initHandler = Offset(0, 0);
   Offset _endHandler = Offset(0, 0);
@@ -38,6 +39,7 @@ class PickerPainter extends CustomPainter {
     this.disabledSweepAngle,
     this.disabledRangeColor,
     this.errorColor,
+    this.drawInitHandlerOnTop = false,
   });
 
   @override
@@ -72,18 +74,30 @@ class PickerPainter extends CustomPainter {
           canvas, size, center, disableTimeStartAngle!, disabledSweepAngle!);
     }
 
-    /// draw start handler
-    _initHandler = radiansToCoordinates(center, -pi / 2 + startAngle, radius);
-    pickerDecorator.initHandlerDecoration.paint(
-      canvas,
-      initHandlerCenterLocation,
-    );
+    if (drawInitHandlerOnTop) {
+      _drawEndHandler(canvas);
+      _drawStartHandler(canvas);
+    } else {
+      _drawStartHandler(canvas);
+      _drawEndHandler(canvas);
+    }
+  }
 
-    /// draw end handler
+  /// draw end handler
+  void _drawEndHandler(Canvas canvas) {
     _endHandler = radiansToCoordinates(center, -pi / 2 + endAngle, radius);
     pickerDecorator.endHandlerDecoration.paint(
       canvas,
       endHandlerCenterLocation,
+    );
+  }
+
+  /// draw start handler
+  void _drawStartHandler(Canvas canvas) {
+    _initHandler = radiansToCoordinates(center, -pi / 2 + startAngle, radius);
+    pickerDecorator.initHandlerDecoration.paint(
+      canvas,
+      initHandlerCenterLocation,
     );
   }
 
