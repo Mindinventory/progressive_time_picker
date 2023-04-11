@@ -117,7 +117,9 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
         ),
       },
       child: MouseRegion(
-        cursor: kIsWeb ? widget.pickerDecoration.mouseCursorForWeb : SystemMouseCursors.none,
+        cursor: kIsWeb
+            ? widget.pickerDecoration.mouseCursorForWeb
+            : SystemMouseCursors.none,
         child: CustomPaint(
           painter: BaseTimePainter(
             decoration: widget.pickerDecoration,
