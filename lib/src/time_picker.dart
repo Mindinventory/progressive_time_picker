@@ -53,6 +53,10 @@ class TimePicker extends StatefulWidget {
   /// used to enabled or disabled Selection of End Handler
   final bool isEndHandlerSelectable;
 
+  /// used to enabled or disabled the Movement of Init and End Handler when its not Selectable
+  /// disable the dragging of both handlers
+  final bool isSelectableHandlerMoveAble;
+
   /// used to disable Selection range, If null so there is no time range
   final DisabledRange? disabledRange;
 
@@ -76,6 +80,7 @@ class TimePicker extends StatefulWidget {
     this.secondarySectors,
     this.isInitHandlerSelectable = true,
     this.isEndHandlerSelectable = true,
+    this.isSelectableHandlerMoveAble = true,
     this.disabledRange,
     this.drawInitHandlerOnTop = false,
   });
@@ -271,6 +276,7 @@ class _TimePickerState extends State<TimePicker> {
         pickerDecoration: getDecoration() ?? getDefaultPickerDecorator(),
         isInitHandlerSelectable: widget.isInitHandlerSelectable,
         isEndHandlerSelectable: widget.isEndHandlerSelectable,
+        isSelectableHandlerMoveAble: widget.isSelectableHandlerMoveAble,
         drawInitHandlerOnTop: widget.drawInitHandlerOnTop,
       ),
     );
