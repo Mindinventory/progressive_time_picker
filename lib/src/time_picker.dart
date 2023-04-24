@@ -101,6 +101,20 @@ class _TimePickerState extends State<TimePicker> {
   @override
   void initState() {
     super.initState();
+    _calculatePickerData();
+  }
+
+  /// we need to update this widget when the parent widget changes
+  @override
+  void didUpdateWidget(TimePicker oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.initTime != widget.initTime ||
+        oldWidget.endTime != widget.endTime) {
+      _calculatePickerData();
+    }
+  }
+
+  void _calculatePickerData() {
     _init = pickedTimeToDivision(
       pickedTime: widget.initTime,
       clockTimeFormat:
