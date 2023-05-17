@@ -23,6 +23,7 @@ class TimePickerPainter extends StatefulWidget {
   final TimePickerDecoration pickerDecoration;
   final bool isInitHandlerSelectable;
   final bool isEndHandlerSelectable;
+  final bool isSelectableHandlerMoveAble;
   final bool drawInitHandlerOnTop;
 
   TimePickerPainter({
@@ -40,6 +41,7 @@ class TimePickerPainter extends StatefulWidget {
     required this.pickerDecoration,
     required this.isInitHandlerSelectable,
     required this.isEndHandlerSelectable,
+    required this.isSelectableHandlerMoveAble,
     this.drawInitHandlerOnTop = false,
   });
 
@@ -251,7 +253,7 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
               widget.pickerDecoration.endHandlerDecoration.handlerOutterRadius)
           : false;
 
-      if (isNoHandlersSelected) {
+      if (isNoHandlersSelected && widget.isSelectableHandlerMoveAble) {
         /// we check if the user pressed in the selection in a double handler picker
         /// that means the user wants to move the selection as a whole
         if (isPointAlongCircle(position, _painter.center, _painter.radius)) {

@@ -1,3 +1,8 @@
+## 0.0.9
+
+* Added an isSelectableHandlerMoveAble bool flag to disable the dragging of both handlers.
+* Updated package details and other improvements.
+
 ## 0.0.8
 
 * Added an option to show more clock numbers using ClockIncrementHourFormat.
