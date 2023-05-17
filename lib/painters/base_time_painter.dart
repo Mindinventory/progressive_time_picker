@@ -124,8 +124,8 @@ class BaseTimePainter extends CustomPainter {
     var centerY = size.height / 2;
 
     for (int i = 0; i < 360; i = i + getIncrementCount) {
-      var x1 = centerX + (centerX * 0.42) * sin(i * pi / 180);
-      var y1 = -centerY + (centerX * 0.42) * cos(i * pi / 180);
+      var x1 = centerX + (centerX * decoration.scaleFactor) * sin(i * pi / 180);
+      var y1 = -centerY + (centerX * decoration.scaleFactor) * cos(i * pi / 180);
       var tp = getIndicatorText(
         i == 0
             ? decoration.clockTimeFormat.value
