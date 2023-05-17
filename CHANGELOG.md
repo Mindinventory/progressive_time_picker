@@ -1,7 +1,7 @@
 ## 0.0.9
 
 * Added an isSelectableHandlerMoveAble bool flag to disable the dragging of both handlers.
-* Updated package details.
+* Updated package details and other improvements.
 
 ## 0.0.8
 
