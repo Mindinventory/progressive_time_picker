@@ -14,6 +14,16 @@ class TimePickerClockNumberDecoration {
   /// default value: 0.9
   final double scaleFactor;
 
+  /// this number is for customize the last number in clock.
+  /// eg: if endNumber == null, with ClockIncrementHourFormat.twentyFour we will show 24 for the last item
+  /// eg: if endNumber == 0, we will show 0 instead of 24
+  /// default value: null
+  int? endNumber;
+
+  /// this number is for positioning number
+  /// default value: 0.42
+  final double positionFactor;
+
   /// Optional Style to be applied to the the clock number in the clock when clock is enable
   /// if not need then set color to transparent
   /// default value: NULL
@@ -51,6 +61,8 @@ class TimePickerClockNumberDecoration {
     this.defaultFontSize = 18,
     this.defaultTextColor = Colors.black,
     this.clockIncrementHourFormat = ClockIncrementHourFormat.six,
+    this.endNumber,
+    this.positionFactor = 0.42,
   });
 
   /// this method will be call when [textStyle] is not defined

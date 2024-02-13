@@ -128,7 +128,7 @@ class BaseTimePainter extends CustomPainter {
       var y1 = -centerY + (centerX * decoration.scaleFactor) * cos(i * pi / 180);
       var tp = getIndicatorText(
         i == 0
-            ? decoration.clockTimeFormat.value
+            ? (decoration.endNumber ?? decoration.clockTimeFormat.value)
             : ((i / 15) * (decoration.clockTimeFormat.value / 24)).toInt(),
         decoration.textStyle ??
             decoration.getDefaultTextStyle().copyWith(
