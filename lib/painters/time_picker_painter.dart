@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import '../painters/picker_painter.dart';
-import '../decoration/time_picker_decoration.dart';
+
 import 'base_time_painter.dart';
+import '../decoration/time_picker_decoration.dart';
+import '../painters/picker_painter.dart';
 import '../src/utils.dart';
 
 typedef SelectionChanged<T> = void Function(T a, T b, bool? valid);
@@ -55,12 +56,14 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
 
   late PickerPainter _painter;
 
-  /// this field will allow us to keep track of the last known good location for endHandler
-  /// it helps to fix issue when using MIN/MAX values and the picker is sweep across the total clock division
+  /// this field will allow us to keep track of the last known good location for
+  /// endHandler it helps to fix issue when using MIN/MAX values and the picker
+  /// is sweep across the total clock division
   int lastValidEndHandlerLocation = 0;
 
-  /// this field will allow us to keep track of the last known good location for initHandler
-  /// it helps to fix issue when using MIN/MAX values and the picker is sweep across the total clock division
+  /// this field will allow us to keep track of the last known good location for
+  /// initHandler it helps to fix issue when using MIN/MAX values and the picker
+  /// is sweep across the total clock division
   int lastValidInitHandlerLocation = 0;
 
   /// start angle in radians where we need to locate the init handler
@@ -76,9 +79,10 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
   double? _disableTimeEndAngle;
   double? _disableSweepAngle;
 
-  /// in case we have a double picker and we want to move the whole selection by clicking in the picker
-  /// this will capture the position in the selection relative to the initial handler
-  /// that way we will be able to keep the selection constant when moving
+  /// in case we have a double picker and we want to move the whole selection by
+  /// clicking in the picker this will capture the position in the selection
+  /// relative to the initial handler that way we will be able to keep the
+  /// selection constant when moving
   late int _differenceFromInitPoint;
 
   bool get isBothHandlersSelected =>
@@ -254,8 +258,8 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
           : false;
 
       if (isNoHandlersSelected && widget.isSelectableHandlerMoveAble) {
-        /// we check if the user pressed in the selection in a double handler picker
-        /// that means the user wants to move the selection as a whole
+        /// we check if the user pressed in the selection in a double handler
+        /// picker that means the user wants to move the selection as a whole
         if (isPointAlongCircle(position, _painter.center, _painter.radius)) {
           var angle = coordinatesToRadians(_painter.center, position);
           if (isAngleInsideRadiansSelection(
@@ -277,7 +281,8 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
                   ClockIncrementTimeFormat.fiveMin,
             );
 
-            /// no need to account for negative values, that will be sorted out in the onPanUpdate
+            /// no need to account for negative values, that will be sorted out
+            /// in the onPanUpdate
             _differenceFromInitPoint =
                 percentageToValue(positionPercentage, clockTimeDivision) -
                     widget.init;

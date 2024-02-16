@@ -1,17 +1,19 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
-import '../src/utils.dart';
+
+import '../decoration/time_picker_decoration.dart';
+import '../decoration/time_picker_handler_decoration.dart';
 import '../decoration/time_picker_sector_decoration.dart';
 import '../decoration/time_picker_sweep_decoration.dart';
-import '../decoration/time_picker_handler_decoration.dart';
-import '../decoration/time_picker_decoration.dart';
 import '../painters/time_picker_painter.dart';
+import '../src/utils.dart';
 
 /// Returns a widget which displays a circle to be used as a picker.
 ///
 /// Required arguments are init and end to set the initial selection.
-/// onSelectionChange is a callback function which returns new values as the user
-/// changes the interval.
+/// onSelectionChange is a callback function which returns new values as the
+/// user changes the interval.
 /// The rest of the params are used to change the look and feel.
 ///
 class TimePicker extends StatefulWidget {
@@ -53,7 +55,8 @@ class TimePicker extends StatefulWidget {
   /// used to enabled or disabled Selection of End Handler
   final bool isEndHandlerSelectable;
 
-  /// used to enabled or disabled the Movement of Init and End Handler when its not Selectable
+  /// used to enabled or disabled the Movement of Init and End Handler when its
+  /// not Selectable
   /// disable the dragging of both handlers
   final bool isSelectableHandlerMoveAble;
 

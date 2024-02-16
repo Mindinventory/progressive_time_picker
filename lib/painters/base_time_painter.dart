@@ -1,5 +1,7 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
+
 import '../decoration/time_picker_clock_number_decoration.dart';
 import '../decoration/time_picker_sector_decoration.dart';
 import '../decoration/time_picker_decoration.dart';
@@ -25,7 +27,8 @@ class BaseTimePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint baseBrush = _getPaint(color: decoration.baseColor);
 
-    /// we need this in the parent to calculate if the user clicks on the circumference
+    /// we need this in the parent to calculate if the user clicks on the
+    /// circumference
     center = Offset(size.width / 2, size.height / 2);
     radius = min(size.width / 2, size.height / 2) - pickerStrokeWidth;
 
@@ -124,8 +127,10 @@ class BaseTimePainter extends CustomPainter {
     var centerY = size.height / 2;
 
     for (int i = 0; i < 360; i = i + getIncrementCount) {
-      var x1 = centerX + (centerX * decoration.scaleFactor) * sin(i * pi / 180);
-      var y1 = -centerY + (centerX * decoration.scaleFactor) * cos(i * pi / 180);
+      var x1 =
+          centerX + (centerX * decoration.positionFactor) * sin(i * pi / 180);
+      var y1 =
+          -centerY + (centerX * decoration.positionFactor) * cos(i * pi / 180);
       var tp = getIndicatorText(
         i == 0
             ? (decoration.endNumber ?? decoration.clockTimeFormat.value)
@@ -154,6 +159,7 @@ class BaseTimePainter extends CustomPainter {
         ..color = color
         ..strokeCap = roundedCap ? StrokeCap.round : StrokeCap.butt
         ..style = style ?? PaintingStyle.stroke
+        ..strokeJoin = StrokeJoin.bevel
         ..strokeWidth = width ?? pickerStrokeWidth;
 
   TextPainter getIndicatorText(var text, TextStyle style) {
