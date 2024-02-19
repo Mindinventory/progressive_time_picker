@@ -23,7 +23,10 @@ class BaseTimePainter extends CustomPainter {
   /// Defines the picker stroke width.
   double pickerStrokeWidth;
 
+  /// Defines the center for the base painter.
   Offset center = Offset(0, 0);
+
+  /// Defines the radius of the base painter.
   double radius = 0.0;
 
   /// Creates a BaseTimePainter.
@@ -79,6 +82,7 @@ class BaseTimePainter extends CustomPainter {
     }
   }
 
+  /// Used to paint sectors.
   List<Offset> _paintSectors(
     int sectors,
     TimePickerSectorDecoration decoration,
@@ -111,13 +115,14 @@ class BaseTimePainter extends CustomPainter {
     return initSectors;
   }
 
+  /// Used to paint lines.
   void _paintLines(
     Canvas canvas,
     List<Offset> inits,
     List<Offset> ends,
     Paint section,
   ) {
-    assert(inits.length == ends.length && inits.length > 0);
+    assert(inits.length == ends.length && inits.isNotEmpty);
 
     for (var i = 0; i < inits.length; i++) {
       canvas.drawLine(inits[i], ends[i], section);
@@ -161,6 +166,7 @@ class BaseTimePainter extends CustomPainter {
     }
   }
 
+  /// Used to get paint
   Paint _getPaint({
     required Color color,
     double? width,
@@ -174,6 +180,7 @@ class BaseTimePainter extends CustomPainter {
         ..strokeJoin = StrokeJoin.bevel
         ..strokeWidth = width ?? pickerStrokeWidth;
 
+  /// Used to get the IndicatorText.
   TextPainter getIndicatorText(var text, TextStyle style) {
     TextPainter tp6 = TextPainter(
       text: TextSpan(style: style, text: text.toString()),

@@ -39,17 +39,28 @@ class PickerPainter extends CustomPainter {
   /// Default value: [false]
   bool drawInitHandlerOnTop;
 
+  /// Defines the offset for the init handler.
   Offset _initHandler = Offset(0, 0);
+
+  /// Defines the offset for the end handler.
   Offset _endHandler = Offset(0, 0);
+
+  /// Defines the center for the painter.
   Offset _center = Offset(0, 0);
+
+  /// Defines the radius of the painter.
   double _radius = 0.0;
 
+  /// Getter for the offset for the init handler.
   Offset get initHandlerCenterLocation => _initHandler;
 
+  /// Getter for the offset for the end handler.
   Offset get endHandlerCenterLocation => _endHandler;
 
+  /// Getter for the center for the painter.
   Offset get center => _center;
 
+  /// Getter for the radius of the painter.
   double get radius => _radius;
 
   /// Creates a PickerPainter.
