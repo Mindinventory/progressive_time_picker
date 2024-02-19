@@ -1,19 +1,35 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
+
 import '../decoration/time_picker_clock_number_decoration.dart';
 import '../decoration/time_picker_sector_decoration.dart';
 import '../decoration/time_picker_decoration.dart';
 import '../src/utils.dart';
 
+///
+/// Base class to paint the time picker.
+///
 class BaseTimePainter extends CustomPainter {
+  /// Defines the TimePickerDecoration.
   TimePickerDecoration decoration;
+
+  /// Defines the primary sectors in the time picker.
   int primarySectors;
+
+  /// Defines the secondary sectors in the time picker.
   int secondarySectors;
+
+  /// Defines the picker stroke width.
   double pickerStrokeWidth;
 
+  /// Defines the center for the base painter.
   Offset center = Offset(0, 0);
+
+  /// Defines the radius of the base painter.
   double radius = 0.0;
 
+  /// Creates a BaseTimePainter.
   BaseTimePainter({
     required this.decoration,
     required this.primarySectors,
@@ -25,7 +41,8 @@ class BaseTimePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint baseBrush = _getPaint(color: decoration.baseColor);
 
-    /// we need this in the parent to calculate if the user clicks on the circumference
+    /// we need this in the parent to calculate if the user clicks on the
+    /// circumference
     center = Offset(size.width / 2, size.height / 2);
     radius = min(size.width / 2, size.height / 2) - pickerStrokeWidth;
 
@@ -55,15 +72,17 @@ class BaseTimePainter extends CustomPainter {
     }
 
     if (decoration.clockNumberDecoration != null &&
-        decoration.clockNumberDecoration!.showNumberIndicators)
+        decoration.clockNumberDecoration!.showNumberIndicators) {
       _drawNumberIndicators(
         canvas,
         size,
         decoration.clockNumberDecoration!,
         decoration.clockNumberDecoration!.clockTimeFormat,
       );
+    }
   }
 
+  /// Used to paint sectors.
   List<Offset> _paintSectors(
     int sectors,
     TimePickerSectorDecoration decoration,
@@ -96,13 +115,14 @@ class BaseTimePainter extends CustomPainter {
     return initSectors;
   }
 
+  /// Used to paint lines.
   void _paintLines(
     Canvas canvas,
     List<Offset> inits,
     List<Offset> ends,
     Paint section,
   ) {
-    assert(inits.length == ends.length && inits.length > 0);
+    assert(inits.length == ends.length && inits.isNotEmpty);
 
     for (var i = 0; i < inits.length; i++) {
       canvas.drawLine(inits[i], ends[i], section);
@@ -124,8 +144,10 @@ class BaseTimePainter extends CustomPainter {
     var centerY = size.height / 2;
 
     for (int i = 0; i < 360; i = i + getIncrementCount) {
-      var x1 = centerX + (centerX * decoration.scaleFactor) * sin(i * pi / 180);
-      var y1 = -centerY + (centerX * decoration.scaleFactor) * cos(i * pi / 180);
+      var x1 =
+          centerX + (centerX * decoration.positionFactor) * sin(i * pi / 180);
+      var y1 =
+          -centerY + (centerX * decoration.positionFactor) * cos(i * pi / 180);
       var tp = getIndicatorText(
         i == 0
             ? (decoration.endNumber ?? decoration.clockTimeFormat.value)
@@ -144,6 +166,7 @@ class BaseTimePainter extends CustomPainter {
     }
   }
 
+  /// Used to get paint
   Paint _getPaint({
     required Color color,
     double? width,
@@ -154,8 +177,10 @@ class BaseTimePainter extends CustomPainter {
         ..color = color
         ..strokeCap = roundedCap ? StrokeCap.round : StrokeCap.butt
         ..style = style ?? PaintingStyle.stroke
+        ..strokeJoin = StrokeJoin.bevel
         ..strokeWidth = width ?? pickerStrokeWidth;
 
+  /// Used to get the IndicatorText.
   TextPainter getIndicatorText(var text, TextStyle style) {
     TextPainter tp6 = TextPainter(
       text: TextSpan(style: style, text: text.toString()),

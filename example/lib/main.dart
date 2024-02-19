@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:progressive_time_picker/progressive_time_picker.dart';
+
 import 'package:intl/intl.dart' as intl;
+import 'package:progressive_time_picker/progressive_time_picker.dart';
 
 void main() {
   /// To set fixed device orientation
@@ -170,7 +171,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     : 'below Sleep Goal (<=8) 😴',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -199,16 +200,13 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           ),
-          SizedBox(
-            height: 18,
-            child: Text(
-              validRange == true
-                  ? "Working hours ${intl.NumberFormat('00').format(_disabledInitTime.h)}:${intl.NumberFormat('00').format(_disabledInitTime.m)} to ${intl.NumberFormat('00').format(_disabledEndTime.h)}:${intl.NumberFormat('00').format(_disabledEndTime.m)}"
-                  : "Please schedule according working time!",
-              style: TextStyle(
-                fontSize: 16.0,
-                color: validRange == true ? Colors.white : Colors.red,
-              ),
+          Text(
+            validRange == true
+                ? "Working hours ${intl.NumberFormat('00').format(_disabledInitTime.h)}:${intl.NumberFormat('00').format(_disabledInitTime.m)} to ${intl.NumberFormat('00').format(_disabledEndTime.h)}:${intl.NumberFormat('00').format(_disabledEndTime.m)}"
+                : "Please schedule according working time!",
+            style: TextStyle(
+              fontSize: 16.0,
+              color: validRange == true ? Colors.white : Colors.red,
             ),
           ),
         ],

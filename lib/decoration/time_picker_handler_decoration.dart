@@ -13,13 +13,13 @@ class TimePickerHandlerDecoration {
   /// ```dart
   /// Icon(Icons.filter_tilt_shift, size: iconSize, color: Colors.teal[700]);
   /// ```
-  /// {@end-tool}
   final Icon? icon;
 
   /// handler default color
   final Color color;
 
-  /// optional shadow which will get apply to the handler, if not provided there handler will get draw without shadow
+  /// optional shadow which will get apply to the handler, if not provided there
+  /// handler will get draw without shadow
   final BoxShadow? shadow;
 
   /// default handler radius = 8
@@ -40,31 +40,41 @@ class TimePickerHandlerDecoration {
   /// {@end-tool}
   final Border? border;
 
-  /// if a value is provided it must be bigger than [this.radius] otherwise it will not draw the expected effect
-  /// the outter handler will only get draw when [this.showHandlerOutter] = true.
+  /// if a value is provided it must be bigger than [this.radius] otherwise it
+  /// will not draw the expected effect the outter handler will only get draw
+  /// when [this.showHandlerOutter] = true.
   ///
   /// See also:
   ///
   ///  * [this.showHandlerOutter] for additional information
   final double handlerOutterRadius;
 
-  /// draw a outter container for the handler, the outter shape could be either a rectangle or circle
-  /// the shape will always match the default handler shape which is control by using the [this.shape]
+  /// draw a outter container for the handler, the outter shape could be either
+  /// a rectangle or circle the shape will always match the default handler
+  /// shape which is control by using the [this.shape]
   /// default value is always false unless defined
-  /// if set to true then the handlerOutterRadius also needs to get set unless you want to use the default value
-  /// showHandlerOutter enable then both [this.shadow] and [this.icon] are expected to be null.
-  /// we are keeping this as backwards compatibility since similar effect could be generate by using
+  /// if set to true then the handlerOutterRadius also needs to get set unless
+  /// you want to use the default value
+  /// showHandlerOutter enable then both [this.shadow] and [this.icon] are
+  /// expected to be null.
+  /// we are keeping this as backwards compatibility since similar effect could
+  /// be generate by using
   ///
   /// ```dart
   /// Icon(Icons.filter_tilt_shift, size: iconSize, color: Colors.teal[700]);
   /// ```
-  /// {@end-tool}
   final bool showHandlerOutter;
 
+  /// used to show the handler on time picker
+  /// Default Value: [true]
   final bool showHandler;
 
+  /// define the stroke cap for the handler on time picker
+  /// Default Value: [false]
+  /// If true then [StrokeCap.round] used and if false then [StrokeCap.butt] used
   final bool useRoundedPickerCap;
 
+  /// Creates a TimePickerHandlerDecoration.
   TimePickerHandlerDecoration({
     this.color = Colors.black,
     this.shape = BoxShape.circle,
@@ -76,17 +86,23 @@ class TimePickerHandlerDecoration {
     this.useRoundedPickerCap = false,
     this.showHandler = true,
     this.showHandlerOutter = false,
-  })  : assert((showHandlerOutter && shadow != null) ? false : true,
-            'shadows does not draw well when using the default HandlerOutter, try using border instead'),
-        assert((showHandlerOutter && icon != null) ? false : true,
-            'handlerOutterRadius can not be use with icon'),
+  })  : assert(
+          (showHandlerOutter && shadow != null) ? false : true,
+          'shadows does not draw well when using the default HandlerOutter, try using border instead',
+        ),
         assert(
-            (!showHandlerOutter ||
-                    (showHandlerOutter && handlerOutterRadius > radius))
-                ? true
-                : false,
-            'when using handlerOutterRadius needs to be bigger than radius value');
+          (showHandlerOutter && icon != null) ? false : true,
+          'handlerOutterRadius can not be use with icon',
+        ),
+        assert(
+          (!showHandlerOutter ||
+                  (showHandlerOutter && handlerOutterRadius > radius))
+              ? true
+              : false,
+          'when using handlerOutterRadius needs to be bigger than radius value',
+        );
 
+  /// paint
   void paint(
     Canvas canvas,
     Offset center,
@@ -117,8 +133,8 @@ class TimePickerHandlerDecoration {
     _drawIcon(canvas: canvas, center: center);
   }
 
-  /// This method owns drawing the default outter handler which could be another circle
-  /// or a rectangle depending on the shape parameter
+  /// This method owns drawing the default outter handler which could be another
+  /// circle or a rectangle depending on the shape parameter
   void _drawHandlerOutter(Canvas canvas, Offset center) {
     if (!this.showHandlerOutter) return;
 
@@ -141,31 +157,35 @@ class TimePickerHandlerDecoration {
     if (shadow == null) return;
 
     var parent = Path();
-    if (shape == BoxShape.circle)
+
+    if (shape == BoxShape.circle) {
       parent
         ..addOval(Rect.fromCircle(
           center: center,
           radius: this.radius + shadow!.spreadRadius,
         ));
-    else
+    } else {
       parent
         ..addRect(Rect.fromCircle(
           center: center,
           radius: this.radius + shadow!.spreadRadius,
         ));
+    }
 
     Paint shadowPaintBrush = Paint()
       ..color = shadow!.color.withOpacity(.5)
       ..maskFilter = MaskFilter.blur(
-          BlurStyle.normal,
-          Shadow.convertRadiusToSigma(
-            shadow!.blurRadius + shadow!.spreadRadius,
-          ));
+        BlurStyle.normal,
+        Shadow.convertRadiusToSigma(
+          shadow!.blurRadius + shadow!.spreadRadius,
+        ),
+      );
 
     canvas.drawPath(parent, shadowPaintBrush);
   }
 
-  /// use this method to create a TextPainter which owns drawing a Icon in the canvas,
+  /// use this method to create a TextPainter which owns drawing a Icon in the
+  /// canvas,
   /// the icon will get added in the center of the handler
   /// the icon will be on top of any other shape drew.
   void _drawIcon({
@@ -204,6 +224,7 @@ class TimePickerHandlerDecoration {
         ..style = style ?? PaintingStyle.stroke
         ..strokeWidth = width;
 
+  /// Creates a copy of the TimePickerHandlerDecoration.
   TimePickerHandlerDecoration copyWith({
     BoxShape? shape,
     Icon? icon,

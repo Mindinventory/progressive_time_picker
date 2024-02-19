@@ -30,7 +30,7 @@ A Customizable Progressive Time Picker for Flutter. This package allow us to cus
 based on our requirements for selecting a specific range from time picker and it's supports multiple
 platforms.
 
-## Key Features
+# Key Features
 
 * supports selection of both or single picker handler.
 * easy customization for decorating a time picker.
@@ -39,8 +39,8 @@ platforms.
 
 # Preview
 
-![progressive_time_picker](https://github.com/Mindinventory/progressive_time_picker/blob/main/assets/timepicker.gif)
-![progressive_time_picker](https://github.com/Mindinventory/progressive_time_picker/blob/main/assets/timepicker_range.gif)
+![progressive_time_picker](https://github.com/Mindinventory/progressive_time_picker/blob/main/assets/timepicker.gif?raw=true)
+![progressive_time_picker](https://github.com/Mindinventory/progressive_time_picker/blob/main/assets/timepicker_range.gif?raw=true)
 
 ## Basic Usage
 
@@ -86,8 +86,7 @@ And for the DisabledRange:
   );
 ```
 
-### Required parameters of TimePicker
-------------
+## Required parameters of TimePicker
 
 | Parameter           | Description                                           |
 |---------------------|-------------------------------------------------------|
@@ -96,8 +95,7 @@ And for the DisabledRange:
 | onSelectionChange   | callback function when init and end PickedTime change |
 | onSelectionEnd      | callback function when init and end PickedTime finish |
 
-### Optional parameters of TimePicker
-------------
+## Optional parameters of TimePicker
 
 | Parameter                        | Default   | Description                                                                                                                      |
 |----------------------------------|-----------|----------------------------------------------------------------------------------------------------------------------------------|
@@ -113,8 +111,7 @@ And for the DisabledRange:
 | DisabledRange disabledRange      | null      | used to disable the time range for the selection                                                                                 |
 | bool drawInitHandlerOnTop        | false     | used to set priority to draw init or end handler on the top                                                                      |
 
-### Required parameters of TimePickerDecoration
-------------
+## Required parameters of TimePickerDecoration
 
 | Parameter                                         | Description                                                                                   |
 |---------------------------------------------------|-----------------------------------------------------------------------------------------------|
@@ -122,8 +119,7 @@ And for the DisabledRange:
 | TimePickerHandlerDecoration initHandlerDecoration | used to decorate our init or end handler of time picker                                       |
 | TimePickerHandlerDecoration endHandlerDecoration  | used to decorate our init or end handler of time picker                                       |
 
-### Optional parameters of TimePickerDecoration
-------------
+## Optional parameters of TimePickerDecoration
 
 | Parameter                                             | Default                  | Description                                                                                    |
 |-------------------------------------------------------|--------------------------|------------------------------------------------------------------------------------------------|
@@ -134,14 +130,13 @@ And for the DisabledRange:
 | TimePickerClockNumberDecoration clockNumberDecoration | -                        | Provides decoration options which will get applied to the internal clock's numbers when enable |
 | SystemMouseCursor mouseCursorForWeb                   | SystemMouseCursors.click | Used to set SystemMouseCursor for PanGestureRecognizer only on WEB                             |
 
-### Guideline for contributors
-------------
+## Guideline for contributors
 
 * Contribution towards our repository is always welcome, we request contributors to create a pull
   request for development.
 
-### Guideline to report an issue/feature request
-------------
+## Guideline to report an issue/feature request
+
 It would be great for us if the reporter can share the below things to understand the root cause of
 the issue.
 
@@ -152,13 +147,20 @@ the issue.
 * Screenshot/video with steps to reproduce the issue
 * Library used
 
-LICENSE!
-------------
+## LICENSE!
+
 **progressive_time_picker**
 is [MIT-licensed.](https://github.com/Mindinventory/progressive_time_picker/blob/main/LICENSE)
 
-Let us know!
-------------
-We’d be really happy if you send us links to your projects where you use our component. Just send an
-email to sales@mindinventory.com And do let us know if you have any questions or suggestion
-regarding our work.
+## Let us know!
+
+We’d be really happy if you send us links to your projects where you use our open-source libraries. 
+Just send an email to [sales@mindinventory.com](mailto:sales@mindinventory.com) And do let us know 
+if you have any questions or suggestion regarding our work.
+
+Visit our website [mindinventory.com](https://www.mindinventory.com)
+
+Let us know if you are interested to building Apps or Designing Products.
+<a href="https://www.mindinventory.com/contact-us.php?utm_source=gthb" target="__blank">
+<img src="https://github.com/Mindinventory/progressive_time_picker/blob/main/assets/have_a_project_button.png?raw=true" width="203" height="43"  alt="app development">
+</a>
