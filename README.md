@@ -160,7 +160,7 @@ if you have any questions or suggestion regarding our work.
 
 Visit our website [mindinventory.com](https://www.mindinventory.com)
 
-Let us know if you are interested to building Apps or Designing Products.
+Let us know if you are interested to building Apps or Designing Products.<br>
 <a href="https://www.mindinventory.com/contact-us.php?utm_source=gthb" target="__blank">
 <img src="https://github.com/Mindinventory/progressive_time_picker/blob/main/assets/have_a_project_button.png?raw=true" width="203" height="43"  alt="app development">
 </a>
