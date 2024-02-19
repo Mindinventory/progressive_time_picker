@@ -4,16 +4,39 @@ import 'package:progressive_time_picker/decoration/time_picker_sweep_decoration.
 import '../src/utils.dart';
 import '../decoration/time_picker_decoration.dart';
 
+///
+/// Painter class of the TimePicker.
+///
 class PickerPainter extends CustomPainter {
+  /// Defines the start angle of the picker.
   double startAngle;
+
+  /// Defines the end angle of the picker.
   double endAngle;
+
+  /// Defines the sweep angle of the picker.
   double sweepAngle;
+
+  /// Defines the decoration used for the picker.
   TimePickerDecoration pickerDecorator;
+
+  /// Defines the disabled time start angle of the picker.
   double? disableTimeStartAngle;
+
+  /// Defines the disabled time end angle of the picker.
   double? disableTimeEndAngle;
+
+  /// Defines the disabled time sweep angle of the picker.
   double? disabledSweepAngle;
+
+  /// Defines the disabled range color.
   Color? disabledRangeColor;
+
+  /// Defines the error color on disabled range.
   Color? errorColor;
+
+  /// Used to draw the start or end handler on th top
+  /// Default value: [false]
   bool drawInitHandlerOnTop;
 
   Offset _initHandler = Offset(0, 0);
@@ -29,6 +52,7 @@ class PickerPainter extends CustomPainter {
 
   double get radius => _radius;
 
+  /// Creates a PickerPainter.
   PickerPainter({
     required this.startAngle,
     required this.endAngle,
@@ -71,7 +95,12 @@ class PickerPainter extends CustomPainter {
         useRoundedPickerCap: false,
       );
       disableSweepDecorator.paint(
-          canvas, size, center, disableTimeStartAngle!, disabledSweepAngle!);
+        canvas,
+        size,
+        center,
+        disableTimeStartAngle!,
+        disabledSweepAngle!,
+      );
     }
 
     if (drawInitHandlerOnTop) {

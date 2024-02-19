@@ -7,26 +7,57 @@ import '../decoration/time_picker_decoration.dart';
 import '../painters/picker_painter.dart';
 import '../src/utils.dart';
 
+/// Used in when TimePicker changes its selection area
 typedef SelectionChanged<T> = void Function(T a, T b, bool? valid);
 
+///
+/// Main Class for the Time Picker Painter.
+///
 class TimePickerPainter extends StatefulWidget {
+  /// the initial value
   final int init;
+
+  /// the end value
   final int end;
+
   final int? disableTimeStart;
   final int? disableTimeEnd;
   final Color? disabledRangeColor;
   final Color? errorColor;
+
+  /// the number of primary sectors to be painted
   final int primarySectors;
+
+  /// the number of secondary sectors to be painted
   final int secondarySectors;
+
+  /// callback function when init and end change
   final SelectionChanged<int> onSelectionChange;
+
+  /// callback function when init and end finish
   final SelectionChanged<int> onSelectionEnd;
+
+  /// widget that would be mounted inside the circle
   final Widget child;
+
+  /// used to decorate the our widget
   final TimePickerDecoration pickerDecoration;
+
+  /// used to enabled or disabled Selection of Init Handler
   final bool isInitHandlerSelectable;
+
+  /// used to enabled or disabled Selection of End Handler
   final bool isEndHandlerSelectable;
+
+  /// used to enabled or disabled the Movement of Init and End Handler when its
+  /// not Selectable
+  /// disable the dragging of both handlers
   final bool isSelectableHandlerMoveAble;
+
+  /// used to set priority to draw init or end handler on the top
   final bool drawInitHandlerOnTop;
 
+  /// Creates a TimePickerPainter.
   TimePickerPainter({
     required this.init,
     required this.end,

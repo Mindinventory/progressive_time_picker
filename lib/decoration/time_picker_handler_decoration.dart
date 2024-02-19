@@ -65,10 +65,16 @@ class TimePickerHandlerDecoration {
   /// ```
   final bool showHandlerOutter;
 
+  /// used to show the handler on time picker
+  /// Default Value: [true]
   final bool showHandler;
 
+  /// define the stroke cap for the handler on time picker
+  /// Default Value: [false]
+  /// If true then [StrokeCap.round] used and if false then [StrokeCap.butt] used
   final bool useRoundedPickerCap;
 
+  /// Creates a TimePickerHandlerDecoration.
   TimePickerHandlerDecoration({
     this.color = Colors.black,
     this.shape = BoxShape.circle,
@@ -96,6 +102,7 @@ class TimePickerHandlerDecoration {
           'when using handlerOutterRadius needs to be bigger than radius value',
         );
 
+  /// paint
   void paint(
     Canvas canvas,
     Offset center,
@@ -168,10 +175,11 @@ class TimePickerHandlerDecoration {
     Paint shadowPaintBrush = Paint()
       ..color = shadow!.color.withOpacity(.5)
       ..maskFilter = MaskFilter.blur(
-          BlurStyle.normal,
-          Shadow.convertRadiusToSigma(
-            shadow!.blurRadius + shadow!.spreadRadius,
-          ));
+        BlurStyle.normal,
+        Shadow.convertRadiusToSigma(
+          shadow!.blurRadius + shadow!.spreadRadius,
+        ),
+      );
 
     canvas.drawPath(parent, shadowPaintBrush);
   }
@@ -216,6 +224,7 @@ class TimePickerHandlerDecoration {
         ..style = style ?? PaintingStyle.stroke
         ..strokeWidth = width;
 
+  /// Creates a copy of the TimePickerHandlerDecoration.
   TimePickerHandlerDecoration copyWith({
     BoxShape? shape,
     Icon? icon,

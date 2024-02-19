@@ -70,6 +70,7 @@ class TimePicker extends StatefulWidget {
   @override
   _TimePickerState createState() => _TimePickerState();
 
+  /// Creates a TimePicker.
   TimePicker({
     required this.initTime,
     required this.endTime,

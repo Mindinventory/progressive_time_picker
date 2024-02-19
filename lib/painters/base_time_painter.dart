@@ -7,15 +7,26 @@ import '../decoration/time_picker_sector_decoration.dart';
 import '../decoration/time_picker_decoration.dart';
 import '../src/utils.dart';
 
+///
+/// Base class to paint the time picker.
+///
 class BaseTimePainter extends CustomPainter {
+  /// Defines the TimePickerDecoration.
   TimePickerDecoration decoration;
+
+  /// Defines the primary sectors in the time picker.
   int primarySectors;
+
+  /// Defines the secondary sectors in the time picker.
   int secondarySectors;
+
+  /// Defines the picker stroke width.
   double pickerStrokeWidth;
 
   Offset center = Offset(0, 0);
   double radius = 0.0;
 
+  /// Creates a BaseTimePainter.
   BaseTimePainter({
     required this.decoration,
     required this.primarySectors,
@@ -58,13 +69,14 @@ class BaseTimePainter extends CustomPainter {
     }
 
     if (decoration.clockNumberDecoration != null &&
-        decoration.clockNumberDecoration!.showNumberIndicators)
+        decoration.clockNumberDecoration!.showNumberIndicators) {
       _drawNumberIndicators(
         canvas,
         size,
         decoration.clockNumberDecoration!,
         decoration.clockNumberDecoration!.clockTimeFormat,
       );
+    }
   }
 
   List<Offset> _paintSectors(

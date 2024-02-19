@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../src/utils.dart';
 
+///
+/// used to decorate the TimePicker widgets clock numbers.
+///
 class TimePickerClockNumberDecoration {
   /// Set to true to enable clock numbers
   /// default value: false
@@ -57,6 +60,7 @@ class TimePickerClockNumberDecoration {
   /// default value: null
   int? endNumber;
 
+  /// Creates a TimePickerClockNumberDecoration.
   TimePickerClockNumberDecoration({
     this.clockTimeFormat = ClockTimeFormat.twentyFourHours,
     this.clockIncrementTimeFormat = ClockIncrementTimeFormat.fiveMin,
