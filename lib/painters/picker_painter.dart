@@ -20,14 +20,14 @@ class PickerPainter extends CustomPainter {
   /// Defines the decoration used for the picker.
   TimePickerDecoration pickerDecorator;
 
-  /// Defines the disabled time start angle of the picker.
-  double? disableTimeStartAngle;
+  /// Defines the disabled time start angles of the picker.
+  List<double?> disableTimeStartAngle;
 
-  /// Defines the disabled time end angle of the picker.
-  double? disableTimeEndAngle;
+  /// Defines the disabled time end angles of the picker.
+  List<double?> disableTimeEndAngle;
 
-  /// Defines the disabled time sweep angle of the picker.
-  double? disabledSweepAngle;
+  /// Defines the disabled time sweep angles of the picker.
+  List<double?> disabledSweepAngle;
 
   /// Defines the disabled range color.
   Color? disabledRangeColor;
@@ -69,9 +69,9 @@ class PickerPainter extends CustomPainter {
     required this.endAngle,
     required this.sweepAngle,
     required this.pickerDecorator,
-    this.disableTimeStartAngle,
-    this.disableTimeEndAngle,
-    this.disabledSweepAngle,
+    required this.disableTimeStartAngle,
+    required this.disableTimeEndAngle,
+    required this.disabledSweepAngle,
     this.disabledRangeColor,
     this.errorColor,
     this.drawInitHandlerOnTop = false,
@@ -91,27 +91,18 @@ class PickerPainter extends CustomPainter {
       sweepAngle,
     );
 
-    if (disableTimeStartAngle != null &&
-        disableTimeEndAngle != null &&
-        disabledSweepAngle != null) {
-      TimePickerSweepDecoration disableSweepDecorator =
-          TimePickerSweepDecoration(
-        pickerStrokeWidth: pickerDecorator.sweepDecoration.pickerStrokeWidth,
-        pickerColor: disabledRangeColor ?? Colors.grey.shade600,
-        connectorColor: pickerDecorator.sweepDecoration.connectorColor,
-        connectorStrokeWidth:
-            pickerDecorator.sweepDecoration.connectorStrokeWidth,
-        pickerGradient: pickerDecorator.sweepDecoration.pickerGradient,
-        showConnector: false,
-        useRoundedPickerCap: false,
-      );
-      disableSweepDecorator.paint(
-        canvas,
-        size,
-        center,
-        disableTimeStartAngle!,
-        disabledSweepAngle!,
-      );
+    if (disableTimeStartAngle.isNotEmpty &&
+        disableTimeEndAngle.isNotEmpty &&
+        disabledSweepAngle.isNotEmpty) {
+      for (int i = 0; i < disableTimeStartAngle.length; i++) {
+        _paintDisabledRange(
+          canvas,
+          size,
+          disableTimeStartAngle[i]!,
+          disableTimeEndAngle[i]!,
+          disabledSweepAngle[i]!,
+        );
+      }
     }
 
     if (drawInitHandlerOnTop) {
@@ -121,6 +112,26 @@ class PickerPainter extends CustomPainter {
       _drawStartHandler(canvas);
       _drawEndHandler(canvas);
     }
+  }
+
+  void _paintDisabledRange(Canvas canvas, Size size, double startAngle,
+      double endAngle, double sweepAngle) {
+    TimePickerSweepDecoration disableSweepDecorator = TimePickerSweepDecoration(
+      pickerStrokeWidth: pickerDecorator.sweepDecoration.pickerStrokeWidth,
+      pickerColor: disabledRangeColor ?? Colors.grey.shade600,
+      connectorColor: pickerDecorator.sweepDecoration.connectorColor,
+      connectorStrokeWidth: pickerDecorator.sweepDecoration.connectorStrokeWidth,
+      pickerGradient: pickerDecorator.sweepDecoration.pickerGradient,
+      showConnector: false,
+      useRoundedPickerCap: false,
+    );
+    disableSweepDecorator.paint(
+      canvas,
+      size,
+      center,
+      startAngle,
+      sweepAngle,
+    );
   }
 
   /// draw end handler
