@@ -233,6 +233,7 @@ class _TimePickerState extends State<TimePicker> {
 
   @override
   Widget build(BuildContext context) {
+    var hasDisabledRanges = widget.disabledRanges != null && widget.disabledRanges!.isNotEmpty;
     return Container(
       height: widget.height ?? 220,
       width: widget.width ?? 220,
@@ -241,9 +242,8 @@ class _TimePickerState extends State<TimePicker> {
         end: _end,
         disableTimeStart: _disabledInit,
         disableTimeEnd: _disabledEnd,
-        disabledRangeColor:
-            widget.disabledRanges?.first.disabledRangeColor ?? Colors.grey,
-        errorColor: widget.disabledRanges?.first.errorColor ?? Colors.red,
+        disabledRangeColor: hasDisabledRanges ? widget.disabledRanges?.first.disabledRangeColor : Colors.grey,
+        errorColor: hasDisabledRanges ? widget.disabledRanges?.first.errorColor : Colors.red,
         primarySectors: widget.primarySectors ?? 0,
         secondarySectors: widget.secondarySectors ?? 0,
         child: widget.child ?? Container(),
