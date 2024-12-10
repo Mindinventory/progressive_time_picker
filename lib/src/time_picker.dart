@@ -61,7 +61,7 @@ class TimePicker extends StatefulWidget {
   final bool isSelectableHandlerMoveAble;
 
   /// used to disable Selection range, If null so there is no time range
-  final DisabledRange? disabledRange;
+  final List<DisabledRange>? disabledRanges;
 
   /// used to set priority to draw init or end handler on the top
   /// default value: false
@@ -85,7 +85,7 @@ class TimePicker extends StatefulWidget {
     this.isInitHandlerSelectable = true,
     this.isEndHandlerSelectable = true,
     this.isSelectableHandlerMoveAble = true,
-    this.disabledRange,
+    this.disabledRanges,
     this.drawInitHandlerOnTop = false,
   });
 }
@@ -94,11 +94,13 @@ class _TimePickerState extends State<TimePicker> {
   int _init = 0;
   int _end = 0;
 
-  int? _disabledInit;
-  int? _disabledEnd;
+  List<int?> disableTimeStart = [];
+  List<int?> disableTimeEnd = [];
+  List<int> _disabledInit = [];
+  List<int> _disabledEnd = [];
 
-  DateTime? disabledStartTime;
-  DateTime? disabledEndTime;
+  List<DateTime?> disabledStartTimes = [];
+  List<DateTime?> disabledEndTimes = [];
 
   bool? error;
 
@@ -113,7 +115,8 @@ class _TimePickerState extends State<TimePicker> {
   void didUpdateWidget(TimePicker oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.initTime != widget.initTime ||
-        oldWidget.endTime != widget.endTime) {
+        oldWidget.endTime != widget.endTime ||
+        oldWidget.disabledRanges != widget.disabledRanges) {
       _calculatePickerData();
     }
   }
@@ -138,28 +141,35 @@ class _TimePickerState extends State<TimePicker> {
               ClockIncrementTimeFormat.fiveMin,
     );
 
-    if (widget.disabledRange != null) {
-      disabledStartTime = getTime(widget.disabledRange!.initTime);
-      disabledEndTime = getTime(widget.disabledRange!.endTime);
+    _disabledInit = [];
+    _disabledEnd = [];
+    disabledStartTimes = [];
+    disabledEndTimes = [];
 
-      _disabledInit = pickedTimeToDivision(
-        pickedTime: widget.disabledRange!.initTime,
-        clockTimeFormat:
-            widget.decoration?.clockNumberDecoration?.clockTimeFormat ??
-                ClockTimeFormat.twentyFourHours,
-        clockIncrementTimeFormat: widget
-                .decoration?.clockNumberDecoration?.clockIncrementTimeFormat ??
-            ClockIncrementTimeFormat.fiveMin,
-      );
-      _disabledEnd = pickedTimeToDivision(
-        pickedTime: widget.disabledRange!.endTime,
-        clockTimeFormat:
-            widget.decoration?.clockNumberDecoration?.clockTimeFormat ??
-                ClockTimeFormat.twentyFourHours,
-        clockIncrementTimeFormat: widget
-                .decoration?.clockNumberDecoration?.clockIncrementTimeFormat ??
-            ClockIncrementTimeFormat.fiveMin,
-      );
+    if (widget.disabledRanges != null) {
+      for (var disabledRange in widget.disabledRanges!) {
+        disabledStartTimes.add(getTime(disabledRange.initTime));
+        disabledEndTimes.add(getTime(disabledRange.endTime));
+
+        _disabledInit.add(pickedTimeToDivision(
+          pickedTime: disabledRange.initTime,
+          clockTimeFormat:
+              widget.decoration?.clockNumberDecoration?.clockTimeFormat ??
+                  ClockTimeFormat.twentyFourHours,
+          clockIncrementTimeFormat: widget.decoration?.clockNumberDecoration
+                  ?.clockIncrementTimeFormat ??
+              ClockIncrementTimeFormat.fiveMin,
+        ));
+        _disabledEnd.add(pickedTimeToDivision(
+          pickedTime: disabledRange.endTime,
+          clockTimeFormat:
+              widget.decoration?.clockNumberDecoration?.clockTimeFormat ??
+                  ClockTimeFormat.twentyFourHours,
+          clockIncrementTimeFormat: widget.decoration?.clockNumberDecoration
+                  ?.clockIncrementTimeFormat ??
+              ClockIncrementTimeFormat.fiveMin,
+        ));
+      }
 
       error = validateRange(widget.initTime, widget.endTime);
     }
@@ -223,6 +233,7 @@ class _TimePickerState extends State<TimePicker> {
 
   @override
   Widget build(BuildContext context) {
+    var hasDisabledRanges = widget.disabledRanges != null && widget.disabledRanges!.isNotEmpty;
     return Container(
       height: widget.height ?? 220,
       width: widget.width ?? 220,
@@ -231,8 +242,8 @@ class _TimePickerState extends State<TimePicker> {
         end: _end,
         disableTimeStart: _disabledInit,
         disableTimeEnd: _disabledEnd,
-        disabledRangeColor: widget.disabledRange?.disabledRangeColor,
-        errorColor: widget.disabledRange?.errorColor,
+        disabledRangeColor: hasDisabledRanges ? widget.disabledRanges?.first.disabledRangeColor : Colors.grey,
+        errorColor: hasDisabledRanges ? widget.disabledRanges?.first.errorColor : Colors.red,
         primarySectors: widget.primarySectors ?? 0,
         secondarySectors: widget.secondarySectors ?? 0,
         child: widget.child ?? Container(),
@@ -252,7 +263,7 @@ class _TimePickerState extends State<TimePicker> {
 
           bool? _valid;
 
-          if (widget.disabledRange != null) {
+          if (widget.disabledRanges != null) {
             _valid = validateRange(inTime, outTime);
             widget.onSelectionChange(inTime, outTime, _valid);
           } else {
@@ -279,7 +290,7 @@ class _TimePickerState extends State<TimePicker> {
                 ClockIncrementTimeFormat.fiveMin,
           );
 
-          if (widget.disabledRange != null) {
+          if (widget.disabledRanges != null) {
             bool _valid = validateRange(inTime, outTime);
             widget.onSelectionEnd(inTime, outTime, _valid);
             if (_valid != error) {
@@ -304,7 +315,7 @@ class _TimePickerState extends State<TimePicker> {
     if (error == false) {
       return widget.decoration?.copyWith(
         sweepDecoration: widget.decoration?.sweepDecoration.copyWith(
-          pickerColor: widget.disabledRange?.errorColor ?? Colors.red,
+          pickerColor: widget.disabledRanges?.first.errorColor ?? Colors.red,
         ),
       );
     }
@@ -316,40 +327,38 @@ class _TimePickerState extends State<TimePicker> {
     DateTime _newEnd = getTime(newEnd);
 
     if (_newStart.isAfter(_newEnd) || _newStart.isAtSameMomentAs(_newEnd)) {
-      if (disabledStartTime!.isAfter(_newStart) &&
-          disabledStartTime!
-              .isBefore(_newEnd.add(Duration(hours: widget.primarySectors!)))) {
-        return false;
-      }
-      if (disabledEndTime!.isAfter(_newStart) &&
-          disabledEndTime!
-              .isBefore(_newEnd.add(Duration(hours: widget.primarySectors!)))) {
-        return false;
-      }
       _newStart = _newStart.add(Duration(hours: -widget.primarySectors!));
     }
-    if (disabledStartTime!.isAfter(disabledEndTime!) ||
-        disabledStartTime!.isAtSameMomentAs(disabledEndTime!)) {
-      disabledStartTime =
-          disabledStartTime!.add(Duration(hours: -widget.primarySectors!));
-    }
-    if (_newStart.isAfter(disabledStartTime!) &&
-        _newStart.isBefore(disabledEndTime!)) {
-      return false;
-    }
-    if (_newEnd.isAfter(disabledStartTime!) &&
-        _newEnd.isBefore(disabledEndTime!)) {
-      return false;
+
+    for (int i = 0; i < disabledStartTimes.length; i++) {
+      DateTime disabledStartTime = disabledStartTimes[i]!;
+      DateTime disabledEndTime = disabledEndTimes[i]!;
+
+      if (disabledStartTime.isAfter(disabledEndTime) ||
+          disabledStartTime.isAtSameMomentAs(disabledEndTime)) {
+        disabledStartTime =
+            disabledStartTime.add(Duration(hours: -widget.primarySectors!));
+      }
+
+      if (_newStart.isAfter(disabledStartTime) &&
+          _newStart.isBefore(disabledEndTime)) {
+        return false;
+      }
+      if (_newEnd.isAfter(disabledStartTime) &&
+          _newEnd.isBefore(disabledEndTime)) {
+        return false;
+      }
+
+      if (disabledStartTime.isAfter(_newStart) &&
+          disabledStartTime.isBefore(_newEnd)) {
+        return false;
+      }
+      if (disabledEndTime.isAfter(_newStart) &&
+          disabledEndTime.isBefore(_newEnd)) {
+        return false;
+      }
     }
 
-    if (disabledStartTime!.isAfter(_newStart) &&
-        disabledStartTime!.isBefore(_newEnd)) {
-      return false;
-    }
-    if (disabledEndTime!.isAfter(_newStart) &&
-        disabledEndTime!.isBefore(_newEnd)) {
-      return false;
-    }
     return true;
   }
 
