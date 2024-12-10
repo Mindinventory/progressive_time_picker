@@ -60,8 +60,16 @@ class TimePicker extends StatefulWidget {
   /// disable the dragging of both handlers
   final bool isSelectableHandlerMoveAble;
 
-  /// used to disable Selection range, If null so there is no time range
+  /// used to disable Selection ranges, If null so there is no disable time ranges
   final List<DisabledRange>? disabledRanges;
+
+  /// defines the color for the disabled range
+  /// Default Value: [Colors.grey]
+  final Color? disabledRangesColor;
+
+  /// defines the color for the error in disabled range
+  /// Default Value: [Colors.red]
+  final Color? disabledRangesErrorColor;
 
   /// used to set priority to draw init or end handler on the top
   /// default value: false
@@ -86,6 +94,8 @@ class TimePicker extends StatefulWidget {
     this.isEndHandlerSelectable = true,
     this.isSelectableHandlerMoveAble = true,
     this.disabledRanges,
+    this.disabledRangesColor = Colors.grey,
+    this.disabledRangesErrorColor = Colors.red,
     this.drawInitHandlerOnTop = false,
   });
 }
@@ -94,13 +104,11 @@ class _TimePickerState extends State<TimePicker> {
   int _init = 0;
   int _end = 0;
 
-  List<int?> disableTimeStart = [];
-  List<int?> disableTimeEnd = [];
-  List<int> _disabledInit = [];
-  List<int> _disabledEnd = [];
+  List<int>? _disabledInit;
+  List<int>? _disabledEnd;
 
-  List<DateTime?> disabledStartTimes = [];
-  List<DateTime?> disabledEndTimes = [];
+  List<DateTime>? disabledStartTime;
+  List<DateTime>? disabledEndTime;
 
   bool? error;
 
@@ -143,32 +151,31 @@ class _TimePickerState extends State<TimePicker> {
 
     _disabledInit = [];
     _disabledEnd = [];
-    disabledStartTimes = [];
-    disabledEndTimes = [];
 
-    if (widget.disabledRanges != null) {
-      for (var disabledRange in widget.disabledRanges!) {
-        disabledStartTimes.add(getTime(disabledRange.initTime));
-        disabledEndTimes.add(getTime(disabledRange.endTime));
-
-        _disabledInit.add(pickedTimeToDivision(
-          pickedTime: disabledRange.initTime,
-          clockTimeFormat:
-              widget.decoration?.clockNumberDecoration?.clockTimeFormat ??
-                  ClockTimeFormat.twentyFourHours,
-          clockIncrementTimeFormat: widget.decoration?.clockNumberDecoration
-                  ?.clockIncrementTimeFormat ??
-              ClockIncrementTimeFormat.fiveMin,
-        ));
-        _disabledEnd.add(pickedTimeToDivision(
-          pickedTime: disabledRange.endTime,
-          clockTimeFormat:
-              widget.decoration?.clockNumberDecoration?.clockTimeFormat ??
-                  ClockTimeFormat.twentyFourHours,
-          clockIncrementTimeFormat: widget.decoration?.clockNumberDecoration
-                  ?.clockIncrementTimeFormat ??
-              ClockIncrementTimeFormat.fiveMin,
-        ));
+    if (widget.disabledRanges?.isNotEmpty ?? false) {
+      for (DisabledRange disabledRange in widget.disabledRanges!) {
+        _disabledInit?.add(
+          pickedTimeToDivision(
+            pickedTime: disabledRange.initTime,
+            clockTimeFormat:
+                widget.decoration?.clockNumberDecoration?.clockTimeFormat ??
+                    ClockTimeFormat.twentyFourHours,
+            clockIncrementTimeFormat: widget.decoration?.clockNumberDecoration
+                    ?.clockIncrementTimeFormat ??
+                ClockIncrementTimeFormat.fiveMin,
+          ),
+        );
+        _disabledEnd?.add(
+          pickedTimeToDivision(
+            pickedTime: disabledRange.endTime,
+            clockTimeFormat:
+                widget.decoration?.clockNumberDecoration?.clockTimeFormat ??
+                    ClockTimeFormat.twentyFourHours,
+            clockIncrementTimeFormat: widget.decoration?.clockNumberDecoration
+                    ?.clockIncrementTimeFormat ??
+                ClockIncrementTimeFormat.fiveMin,
+          ),
+        );
       }
 
       error = validateRange(widget.initTime, widget.endTime);
@@ -233,7 +240,6 @@ class _TimePickerState extends State<TimePicker> {
 
   @override
   Widget build(BuildContext context) {
-    var hasDisabledRanges = widget.disabledRanges != null && widget.disabledRanges!.isNotEmpty;
     return Container(
       height: widget.height ?? 220,
       width: widget.width ?? 220,
@@ -242,8 +248,8 @@ class _TimePickerState extends State<TimePicker> {
         end: _end,
         disableTimeStart: _disabledInit,
         disableTimeEnd: _disabledEnd,
-        disabledRangeColor: hasDisabledRanges ? widget.disabledRanges?.first.disabledRangeColor : Colors.grey,
-        errorColor: hasDisabledRanges ? widget.disabledRanges?.first.errorColor : Colors.red,
+        disabledRangeColor: widget.disabledRangesColor,
+        errorColor: widget.disabledRangesErrorColor,
         primarySectors: widget.primarySectors ?? 0,
         secondarySectors: widget.secondarySectors ?? 0,
         child: widget.child ?? Container(),
@@ -263,7 +269,7 @@ class _TimePickerState extends State<TimePicker> {
 
           bool? _valid;
 
-          if (widget.disabledRanges != null) {
+          if (widget.disabledRanges?.isNotEmpty ?? false) {
             _valid = validateRange(inTime, outTime);
             widget.onSelectionChange(inTime, outTime, _valid);
           } else {
@@ -290,7 +296,7 @@ class _TimePickerState extends State<TimePicker> {
                 ClockIncrementTimeFormat.fiveMin,
           );
 
-          if (widget.disabledRanges != null) {
+          if (widget.disabledRanges?.isNotEmpty ?? false) {
             bool _valid = validateRange(inTime, outTime);
             widget.onSelectionEnd(inTime, outTime, _valid);
             if (_valid != error) {
@@ -315,7 +321,7 @@ class _TimePickerState extends State<TimePicker> {
     if (error == false) {
       return widget.decoration?.copyWith(
         sweepDecoration: widget.decoration?.sweepDecoration.copyWith(
-          pickerColor: widget.disabledRanges?.first.errorColor ?? Colors.red,
+          pickerColor: widget.disabledRangesErrorColor,
         ),
       );
     }
@@ -323,49 +329,91 @@ class _TimePickerState extends State<TimePicker> {
   }
 
   bool validateRange(PickedTime newStart, PickedTime newEnd) {
-    DateTime _newStart = getTime(newStart);
-    DateTime _newEnd = getTime(newEnd);
+    int startInMinutes = _convertToMinutes(newStart);
+    int endInMinutes = _convertToMinutes(newEnd);
+    int totalMinutesInDay =
+        (widget.primarySectors ?? 0) * 60; // Total minutes in a full circle
 
-    if (_newStart.isAfter(_newEnd) || _newStart.isAtSameMomentAs(_newEnd)) {
-      _newStart = _newStart.add(Duration(hours: -widget.primarySectors!));
+    // If the selected start and end times are the same, treat it as spanning the full circle
+    if (startInMinutes == endInMinutes) {
+      for (var disabledRange in widget.disabledRanges!) {
+        int disabledStart = _convertToMinutes(disabledRange.initTime);
+        int disabledEnd = _convertToMinutes(disabledRange.endTime);
+
+        // Disabled range spans midnight
+        if (disabledStart > disabledEnd) {
+          // Overlaps with any part of the circular disabled range
+          if (_rangesOverlap(0, disabledEnd, 0, totalMinutesInDay - 1) ||
+              _rangesOverlap(disabledStart, totalMinutesInDay - 1, 0,
+                  totalMinutesInDay - 1)) {
+            return false;
+          }
+        } else {
+          // Normal disabled range
+          if (_rangesOverlap(
+              0, totalMinutesInDay - 1, disabledStart, disabledEnd)) {
+            return false;
+          }
+        }
+      }
+      return false; // Entire range selected overlaps all disabled ranges
     }
 
-    for (int i = 0; i < disabledStartTimes.length; i++) {
-      DateTime disabledStartTime = disabledStartTimes[i]!;
-      DateTime disabledEndTime = disabledEndTimes[i]!;
+    // Normal range validation
+    for (var disabledRange in widget.disabledRanges!) {
+      int disabledStart = _convertToMinutes(disabledRange.initTime);
+      int disabledEnd = _convertToMinutes(disabledRange.endTime);
 
-      if (disabledStartTime.isAfter(disabledEndTime) ||
-          disabledStartTime.isAtSameMomentAs(disabledEndTime)) {
-        disabledStartTime =
-            disabledStartTime.add(Duration(hours: -widget.primarySectors!));
-      }
+      // Handle circular (midnight-spanning) disabled range
+      if (disabledStart > disabledEnd) {
+        // Part 1: From disabled start to midnight or 23:59
+        if (_rangesOverlap(startInMinutes, endInMinutes, disabledStart,
+            totalMinutesInDay - 1)) {
+          return false;
+        }
 
-      if (_newStart.isAfter(disabledStartTime) &&
-          _newStart.isBefore(disabledEndTime)) {
-        return false;
-      }
-      if (_newEnd.isAfter(disabledStartTime) &&
-          _newEnd.isBefore(disabledEndTime)) {
-        return false;
-      }
+        // Part 2: From 00:00 to disabled end
+        if (_rangesOverlap(startInMinutes, endInMinutes, 0, disabledEnd)) {
+          return false;
+        }
 
-      if (disabledStartTime.isAfter(_newStart) &&
-          disabledStartTime.isBefore(_newEnd)) {
-        return false;
-      }
-      if (disabledEndTime.isAfter(_newStart) &&
-          disabledEndTime.isBefore(_newEnd)) {
-        return false;
+        // Special Case: If the selected range itself is circular
+        if (startInMinutes > endInMinutes) {
+          if (_rangesOverlap(disabledStart, totalMinutesInDay - 1,
+                  startInMinutes, totalMinutesInDay - 1) ||
+              _rangesOverlap(0, disabledEnd, 0, endInMinutes)) {
+            return false;
+          }
+        }
+      } else {
+        // Normal disabled range
+        if (_rangesOverlap(
+            startInMinutes, endInMinutes, disabledStart, disabledEnd)) {
+          return false;
+        }
+
+        // Special Case: If the selected range itself is circular
+        if (startInMinutes > endInMinutes) {
+          if (_rangesOverlap(disabledStart, disabledEnd, startInMinutes,
+                  totalMinutesInDay - 1) ||
+              _rangesOverlap(disabledStart, disabledEnd, 0, endInMinutes)) {
+            return false;
+          }
+        }
       }
     }
 
     return true;
   }
 
-  DateTime getTime(PickedTime time) {
-    DateTime now = DateTime.now();
-    return DateTime(now.year, now.month, now.day,
-        time.h == 0 ? (widget.primarySectors!) : time.h, time.m);
+  // Helper function to check overlap between two ranges
+  bool _rangesOverlap(int start1, int end1, int start2, int end2) {
+    return !(end1 <= start2 || start1 >= end2);
+  }
+
+  // Convert PickedTime to minutes for easier comparison
+  int _convertToMinutes(PickedTime time) {
+    return time.h * 60 + time.m;
   }
 }
 
@@ -373,12 +421,8 @@ class DisabledRange {
   const DisabledRange({
     required this.initTime,
     required this.endTime,
-    this.disabledRangeColor,
-    this.errorColor,
   });
 
   final PickedTime initTime;
   final PickedTime endTime;
-  final Color? disabledRangeColor;
-  final Color? errorColor;
 }

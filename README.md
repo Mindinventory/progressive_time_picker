@@ -32,10 +32,10 @@ platforms.
 
 # Key Features
 
-* supports selection of both or single picker handler.
-* easy customization for decorating a time picker.
-* gives feature to show clock numbers in both 12 or 24 hours format and also supports customization
-  for it.
+* Supports selecting either a single picker handler or both simultaneously.
+* Provides easy customization options for decorating the time picker.
+* Offers the ability to display clock numbers in both 12-hour and 24-hour formats, with full customization support.
+* Allows disabling specific time ranges for more control.
 
 # Preview
 
@@ -68,22 +68,22 @@ And add it in its most basic form like it:
 And for the DisabledRange:
 
 ```dart
-  TimePicker(
+TimePicker(
     initTime: PickedTime(h: 0, m: 0),
     endTime: PickedTime(h: 8, m: 0),
-    disabledRange: DisabledRange(
-      initTime: PickedTime(h: 12, m: 0),
-      endTime: PickedTime(h: 20, m: 0),
-      disabledRangeColor: Colors.grey,
-      errorColor: Colors.red,
+    disabledRanges: [
+      DisabledRange(
+        initTime: PickedTime(h: 12, m: 0),
+        endTime: PickedTime(h: 20, m: 0),
       ),
-    onSelectionChange: (start, end, isDisableRange) =>
-        print(
-            'onSelectionChange => init : ${start.h}:${start.m}, end : ${end.h}:${end.m}, isDisableRangeRange: $isDisableRange'),
-    onSelectionEnd: (start, end, isDisableRange) =>
-        print(
-            'onSelectionEnd => init : ${start.h}:${start.m}, end : ${end.h}:${end.m},, isDisableRangeRange: $isDisableRange'),
-  );
+    ],
+    disabledRangesColor: Colors.grey,
+    disabledRangesErrorColor: Colors.red,
+    onSelectionChange: (start, end, isDisableRange) => print(
+      'onSelectionChange => init : ${start.h}:${start.m}, end : ${end.h}:${end.m}, isDisableRangeRange: $isDisableRange'),
+    onSelectionEnd: (start, end, isDisableRange) => print(
+      'onSelectionEnd => init : ${start.h}:${start.m}, end : ${end.h}:${end.m},, isDisableRangeRange: $isDisableRange'),
+);
 ```
 
 ## Required parameters of TimePicker
@@ -97,19 +97,21 @@ And for the DisabledRange:
 
 ## Optional parameters of TimePicker
 
-| Parameter                        | Default   | Description                                                                                                                      |
-|----------------------------------|-----------|----------------------------------------------------------------------------------------------------------------------------------|
-| double height                    | 220       | height of the canvas                                                                                                             |
-| double width                     | 220       | width of the canvas                                                                                                              |
-| int primarySectors               | 0         | the number of primary sectors to be painted                                                                                      |
-| int secondarySectors             | 0         | the number of secondary sectors to be painted                                                                                    |
-| Widget child                     | Container | widget that would be mounted inside the circle                                                                                   |
-| TimePickerDecoration decoration  | -         | used to decorate our TimePicker widget                                                                                           |
-| bool isInitHandlerSelectable     | true      | used to enabled or disabled Selection of Init Handler                                                                            |
-| bool isEndHandlerSelectable      | true      | used to enabled or disabled Selection of End Handler                                                                             |
-| bool isSelectableHandlerMoveAble | true      | used to enabled or disabled the Movement of Init and End Handler when its not Selectable (disable the dragging of both handlers) |
-| DisabledRange disabledRange      | null      | used to disable the time range for the selection                                                                                 |
-| bool drawInitHandlerOnTop        | false     | used to set priority to draw init or end handler on the top                                                                      |
+| Parameter                          | Default     | Description                                                                                                                      |
+|------------------------------------|-------------|----------------------------------------------------------------------------------------------------------------------------------|
+| double height                      | 220         | height of the canvas                                                                                                             |
+| double width                       | 220         | width of the canvas                                                                                                              |
+| int primarySectors                 | 0           | the number of primary sectors to be painted                                                                                      |
+| int secondarySectors               | 0           | the number of secondary sectors to be painted                                                                                    |
+| Widget child                       | Container   | widget that would be mounted inside the circle                                                                                   |
+| TimePickerDecoration decoration    | -           | used to decorate our TimePicker widget                                                                                           |
+| bool isInitHandlerSelectable       | true        | used to enabled or disabled Selection of Init Handler                                                                            |
+| bool isEndHandlerSelectable        | true        | used to enabled or disabled Selection of End Handler                                                                             |
+| bool isSelectableHandlerMoveAble   | true        | used to enabled or disabled the Movement of Init and End Handler when its not Selectable (disable the dragging of both handlers) |
+| List<DisabledRange> disabledRanges | null        | used to disable Selection ranges, If null so there is no disable time ranges                                                     |
+| Color disabledRangesColor          | Colors.grey | defines the color for the disabled range                                                                                         |
+| Color disabledRangesErrorColor     | Colors.red  | defines the color for the error in disabled range                                                                                |
+| bool drawInitHandlerOnTop          | false       | used to set priority to draw init or end handler on the top                                                                      |
 
 ## Required parameters of TimePickerDecoration
 
@@ -121,14 +123,14 @@ And for the DisabledRange:
 
 ## Optional parameters of TimePickerDecoration
 
-| Parameter                                             | Default                  | Description                                                                                    |
-|-------------------------------------------------------|--------------------------|------------------------------------------------------------------------------------------------|
-| Color baseColor                                       | cyanAccent               | defines the background color of the picker                                                     |
-| double pickerBaseCirclePadding                        | 0.0                      | to add extra padding for picker base or outer circle                                           |
-| TimePickerSectorDecoration primarySectorsDecoration   | -                        | used to decorate the primary sectors of out time picker                                        |
-| TimePickerSectorDecoration secondarySectorsDecoration | -                        | used to decorate the secondary of out time picker                                              |
-| TimePickerClockNumberDecoration clockNumberDecoration | -                        | Provides decoration options which will get applied to the internal clock's numbers when enable |
-| SystemMouseCursor mouseCursorForWeb                   | SystemMouseCursors.click | Used to set SystemMouseCursor for PanGestureRecognizer only on WEB                             |
+| Parameter                                             | Default    | Description                                                                                    |
+|-------------------------------------------------------|------------|------------------------------------------------------------------------------------------------|
+| Color baseColor                                       | cyanAccent | defines the background color of the picker                                                     |
+| double pickerBaseCirclePadding                        | 0.0        | to add extra padding for picker base or outer circle                                           |
+| TimePickerSectorDecoration primarySectorsDecoration   | -          | used to decorate the primary sectors of out time picker                                        |
+| TimePickerSectorDecoration secondarySectorsDecoration | -          | used to decorate the secondary of out time picker                                              |
+| TimePickerClockNumberDecoration clockNumberDecoration | -          | Provides decoration options which will get applied to the internal clock's numbers when enable |
+| SystemMouseCursor mouseCursor                         | -          | Used to set SystemMouseCursor for PanGestureRecognizer                                         |
 
 ## Guideline for contributors
 
@@ -160,7 +162,7 @@ if you have any questions or suggestion regarding our work.
 
 Visit our website [mindinventory.com](https://www.mindinventory.com)
 
-Let us know if you are interested to building Apps or Designing Products.<br>
-<a href="https://www.mindinventory.com/contact-us.php?utm_source=gthb" target="__blank">
-<img src="https://github.com/Mindinventory/progressive_time_picker/blob/main/assets/have_a_project_button.png?raw=true" width="203" height="43"  alt="app development">
-</a>
+Let us know if you are interested to building Apps or Designing Products.
+<p><a href="https://www.mindinventory.com/contact-us.php?utm_source=gthb&utm_medium=repo&utm_campaign=progressive_time_picker" target="__blank">
+<img src="https://github.com/Mindinventory/progressive_time_picker/blob/main/assets/have_a_project_button.png?raw=true" width="203" height="43"  alt="flutter app development">
+</a></p>

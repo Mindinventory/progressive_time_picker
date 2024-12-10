@@ -52,9 +52,8 @@ class TimePickerDecoration {
   /// See also: TimePickerHandlerDecoration
   final TimePickerHandlerDecoration endHandlerDecoration;
 
-  /// Used to set SystemMouseCursor for PanGestureRecognizer only on WEB
-  /// default value: [SystemMouseCursors.click]
-  final SystemMouseCursor mouseCursorForWeb;
+  /// Used to set SystemMouseCursor for PanGestureRecognizer
+  final SystemMouseCursor? mouseCursor;
 
   /// Creates a TimePickerDecoration.
   TimePickerDecoration({
@@ -66,7 +65,7 @@ class TimePickerDecoration {
     this.primarySectorsDecoration,
     this.secondarySectorsDecoration,
     this.clockNumberDecoration,
-    this.mouseCursorForWeb = SystemMouseCursors.click,
+    this.mouseCursor,
   });
 
   /// Creates a copy of the TimePickerDecoration.

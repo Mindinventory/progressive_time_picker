@@ -20,8 +20,8 @@ class TimePickerPainter extends StatefulWidget {
   /// the end value
   final int end;
 
-  final List<int?> disableTimeStart;
-  final List<int?> disableTimeEnd;
+  final List<int>? disableTimeStart;
+  final List<int>? disableTimeEnd;
   final Color? disabledRangeColor;
   final Color? errorColor;
 
@@ -61,8 +61,8 @@ class TimePickerPainter extends StatefulWidget {
   TimePickerPainter({
     required this.init,
     required this.end,
-    required this.disableTimeStart,
-    required this.disableTimeEnd,
+    this.disableTimeStart,
+    this.disableTimeEnd,
     this.disabledRangeColor,
     this.errorColor,
     required this.child,
@@ -106,9 +106,9 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
   /// the absolute angle in radians representing the selection
   late double _sweepAngle;
 
-  List<double?> _disableTimeStartAngle = [];
-  List<double?> _disableTimeEndAngle = [];
-  List<double?> _disableSweepAngle = [];
+  List<double>? _disableTimeStartAngle;
+  List<double>? _disableTimeEndAngle;
+  List<double>? _disableSweepAngle;
 
   /// in case we have a double picker and we want to move the whole selection by
   /// clicking in the picker this will capture the position in the selection
@@ -154,9 +154,11 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
         ),
       },
       child: MouseRegion(
-        cursor: kIsWeb
-            ? widget.pickerDecoration.mouseCursorForWeb
-            : SystemMouseCursors.none,
+        cursor: widget.pickerDecoration.mouseCursor ??
+            ((defaultTargetPlatform == TargetPlatform.android ||
+                    defaultTargetPlatform == TargetPlatform.iOS)
+                ? SystemMouseCursors.none
+                : SystemMouseCursors.click),
         child: CustomPaint(
           painter: BaseTimePainter(
             decoration: widget.pickerDecoration,
@@ -194,20 +196,21 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
     _disableTimeEndAngle = [];
     _disableSweepAngle = [];
 
-    if (widget.disableTimeStart.isNotEmpty &&
-        widget.disableTimeEnd.isNotEmpty) {
-      for (int i = 0; i < widget.disableTimeStart.length; i++) {
+    if ((widget.disableTimeStart?.isNotEmpty ?? false) &&
+        (widget.disableTimeEnd?.isNotEmpty ?? false)) {
+      for (int i = 0; i < widget.disableTimeStart!.length; i++) {
         var disableTimeInitPercentage =
-            valueToPercentage(widget.disableTimeStart[i]!, clockTimeDivision);
+            valueToPercentage(widget.disableTimeStart![i], clockTimeDivision);
         var disableTimeEndPercentage =
-            valueToPercentage(widget.disableTimeEnd[i]!, clockTimeDivision);
+            valueToPercentage(widget.disableTimeEnd![i], clockTimeDivision);
         var disabledSweep =
             getSweepAngle(disableTimeInitPercentage, disableTimeEndPercentage);
 
         _disableTimeStartAngle
-            .add(percentageToRadians(disableTimeInitPercentage));
-        _disableTimeEndAngle.add(percentageToRadians(disableTimeEndPercentage));
-        _disableSweepAngle.add(percentageToRadians(disabledSweep.abs()));
+            ?.add(percentageToRadians(disableTimeInitPercentage));
+        _disableTimeEndAngle
+            ?.add(percentageToRadians(disableTimeEndPercentage));
+        _disableSweepAngle?.add(percentageToRadians(disabledSweep.abs()));
       }
     }
 

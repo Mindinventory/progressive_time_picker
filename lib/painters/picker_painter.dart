@@ -21,13 +21,13 @@ class PickerPainter extends CustomPainter {
   TimePickerDecoration pickerDecorator;
 
   /// Defines the disabled time start angles of the picker.
-  List<double?> disableTimeStartAngle;
+  List<double>? disableTimeStartAngle;
 
   /// Defines the disabled time end angles of the picker.
-  List<double?> disableTimeEndAngle;
+  List<double>? disableTimeEndAngle;
 
   /// Defines the disabled time sweep angles of the picker.
-  List<double?> disabledSweepAngle;
+  List<double>? disabledSweepAngle;
 
   /// Defines the disabled range color.
   Color? disabledRangeColor;
@@ -69,9 +69,9 @@ class PickerPainter extends CustomPainter {
     required this.endAngle,
     required this.sweepAngle,
     required this.pickerDecorator,
-    required this.disableTimeStartAngle,
-    required this.disableTimeEndAngle,
-    required this.disabledSweepAngle,
+    this.disableTimeStartAngle,
+    this.disableTimeEndAngle,
+    this.disabledSweepAngle,
     this.disabledRangeColor,
     this.errorColor,
     this.drawInitHandlerOnTop = false,
@@ -91,16 +91,16 @@ class PickerPainter extends CustomPainter {
       sweepAngle,
     );
 
-    if (disableTimeStartAngle.isNotEmpty &&
-        disableTimeEndAngle.isNotEmpty &&
-        disabledSweepAngle.isNotEmpty) {
-      for (int i = 0; i < disableTimeStartAngle.length; i++) {
+    if ((disableTimeStartAngle?.isNotEmpty ?? false) &&
+        (disableTimeEndAngle?.isNotEmpty ?? false) &&
+        (disabledSweepAngle?.isNotEmpty ?? false)) {
+      for (int i = 0; i < disableTimeStartAngle!.length; i++) {
         _paintDisabledRange(
           canvas,
           size,
-          disableTimeStartAngle[i]!,
-          disableTimeEndAngle[i]!,
-          disabledSweepAngle[i]!,
+          disableTimeStartAngle![i],
+          disableTimeEndAngle![i],
+          disabledSweepAngle![i],
         );
       }
     }
@@ -114,13 +114,19 @@ class PickerPainter extends CustomPainter {
     }
   }
 
-  void _paintDisabledRange(Canvas canvas, Size size, double startAngle,
-      double endAngle, double sweepAngle) {
+  void _paintDisabledRange(
+    Canvas canvas,
+    Size size,
+    double startAngle,
+    double endAngle,
+    double sweepAngle,
+  ) {
     TimePickerSweepDecoration disableSweepDecorator = TimePickerSweepDecoration(
       pickerStrokeWidth: pickerDecorator.sweepDecoration.pickerStrokeWidth,
       pickerColor: disabledRangeColor ?? Colors.grey.shade600,
       connectorColor: pickerDecorator.sweepDecoration.connectorColor,
-      connectorStrokeWidth: pickerDecorator.sweepDecoration.connectorStrokeWidth,
+      connectorStrokeWidth:
+          pickerDecorator.sweepDecoration.connectorStrokeWidth,
       pickerGradient: pickerDecorator.sweepDecoration.pickerGradient,
       showConnector: false,
       useRoundedPickerCap: false,

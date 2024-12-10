@@ -77,12 +77,14 @@ class _MyHomePageState extends State<MyHomePage> {
           TimePicker(
             initTime: _inBedTime,
             endTime: _outBedTime,
-            disabledRange: DisabledRange(
-              initTime: _disabledInitTime,
-              endTime: _disabledEndTime,
-              disabledRangeColor: Colors.grey,
-              errorColor: Colors.red,
-            ),
+            disabledRanges: [
+              DisabledRange(
+                initTime: _disabledInitTime,
+                endTime: _disabledEndTime,
+              ),
+            ],
+            disabledRangesColor: Colors.grey,
+            disabledRangesErrorColor: Colors.red,
             height: 260.0,
             width: 260.0,
             onSelectionChange: _updateLabels,
@@ -147,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Text(
                     '${intl.NumberFormat('00').format(_intervalBedTime.h)}Hr ${intl.NumberFormat('00').format(_intervalBedTime.m)}Min',
                     style: TextStyle(
-                      fontSize: 14.0,
+                      fontSize: 12.0,
                       color: _isSleepGoal ? Color(0xFF3CDAF7) : Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
