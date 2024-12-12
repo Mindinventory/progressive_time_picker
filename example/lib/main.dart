@@ -36,7 +36,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   ClockTimeFormat clockTimeFormat = ClockTimeFormat.twentyFourHours;
-  ClockIncrementTimeFormat clockIncrementTimeFormat = ClockIncrementTimeFormat.fiveMin;
+  ClockIncrementTimeFormat clockIncrementTimeFormat =
+      ClockIncrementTimeFormat.fiveMin;
 
   PickedTime inBedTime = PickedTime(h: 0, m: 0);
   PickedTime outBedTime = PickedTime(h: 8, m: 0);
@@ -171,7 +172,9 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                isSleepGoal ? "Above Sleep Goal (>=8) 😇" : 'below Sleep Goal (<=8) 😴',
+                isSleepGoal
+                    ? "Above Sleep Goal (>=8) 😇"
+                    : 'below Sleep Goal (<=8) 😴',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,
