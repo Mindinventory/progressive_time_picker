@@ -1,3 +1,5 @@
+import 'dart:developer' as dev;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,6 +16,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,38 +28,37 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key}) : super(key: key);
+  const MyHomePage({super.key});
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  ClockTimeFormat _clockTimeFormat = ClockTimeFormat.twentyFourHours;
-  ClockIncrementTimeFormat _clockIncrementTimeFormat =
-      ClockIncrementTimeFormat.fiveMin;
+  ClockTimeFormat clockTimeFormat = ClockTimeFormat.twentyFourHours;
+  ClockIncrementTimeFormat clockIncrementTimeFormat = ClockIncrementTimeFormat.fiveMin;
 
-  PickedTime _inBedTime = PickedTime(h: 0, m: 0);
-  PickedTime _outBedTime = PickedTime(h: 8, m: 0);
-  PickedTime _intervalBedTime = PickedTime(h: 0, m: 0);
+  PickedTime inBedTime = PickedTime(h: 0, m: 0);
+  PickedTime outBedTime = PickedTime(h: 8, m: 0);
+  PickedTime intervalBedTime = PickedTime(h: 0, m: 0);
 
-  PickedTime _disabledInitTime = PickedTime(h: 12, m: 0);
-  PickedTime _disabledEndTime = PickedTime(h: 20, m: 0);
+  PickedTime disabledInitTime = PickedTime(h: 12, m: 0);
+  PickedTime disabledEndTime = PickedTime(h: 20, m: 0);
 
-  double _sleepGoal = 8.0;
-  bool _isSleepGoal = false;
+  double sleepGoal = 8.0;
+  bool isSleepGoal = false;
 
   bool? validRange = true;
 
   @override
   void initState() {
     super.initState();
-    _isSleepGoal = (_sleepGoal >= 8.0) ? true : false;
-    _intervalBedTime = formatIntervalTime(
-      init: _inBedTime,
-      end: _outBedTime,
-      clockTimeFormat: _clockTimeFormat,
-      clockIncrementTimeFormat: _clockIncrementTimeFormat,
+    isSleepGoal = (sleepGoal >= 8.0) ? true : false;
+    intervalBedTime = formatIntervalTime(
+      init: inBedTime,
+      end: outBedTime,
+      clockTimeFormat: clockTimeFormat,
+      clockIncrementTimeFormat: clockIncrementTimeFormat,
     );
   }
 
@@ -75,12 +78,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           TimePicker(
-            initTime: _inBedTime,
-            endTime: _outBedTime,
+            initTime: inBedTime,
+            endTime: outBedTime,
             disabledRanges: [
               DisabledRange(
-                initTime: _disabledInitTime,
-                endTime: _disabledEndTime,
+                initTime: disabledInitTime,
+                endTime: disabledEndTime,
               ),
             ],
             disabledRangesColor: Colors.grey,
@@ -88,16 +91,16 @@ class _MyHomePageState extends State<MyHomePage> {
             height: 260.0,
             width: 260.0,
             onSelectionChange: _updateLabels,
-            onSelectionEnd: (start, end, isDisableRange) => print(
+            onSelectionEnd: (start, end, isDisableRange) => dev.log(
                 'onSelectionEnd => init : ${start.h}:${start.m}, end : ${end.h}:${end.m}, isDisableRange: $isDisableRange'),
-            primarySectors: _clockTimeFormat.value,
-            secondarySectors: _clockTimeFormat.value * 2,
+            primarySectors: clockTimeFormat.value,
+            secondarySectors: clockTimeFormat.value * 2,
             decoration: TimePickerDecoration(
               baseColor: Color(0xFF1F2633),
               pickerBaseCirclePadding: 15.0,
               sweepDecoration: TimePickerSweepDecoration(
                 pickerStrokeWidth: 30.0,
-                pickerColor: _isSleepGoal ? Color(0xFF3CDAF7) : Colors.white,
+                pickerColor: isSleepGoal ? Color(0xFF3CDAF7) : Colors.white,
                 showConnector: true,
               ),
               initHandlerDecoration: TimePickerHandlerDecoration(
@@ -137,8 +140,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 defaultFontSize: 12.0,
                 scaleFactor: 2.0,
                 showNumberIndicators: true,
-                clockTimeFormat: _clockTimeFormat,
-                clockIncrementTimeFormat: _clockIncrementTimeFormat,
+                clockTimeFormat: clockTimeFormat,
+                clockIncrementTimeFormat: clockIncrementTimeFormat,
               ),
             ),
             child: Padding(
@@ -147,10 +150,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '${intl.NumberFormat('00').format(_intervalBedTime.h)}Hr ${intl.NumberFormat('00').format(_intervalBedTime.m)}Min',
+                    '${intl.NumberFormat('00').format(intervalBedTime.h)}Hr ${intl.NumberFormat('00').format(intervalBedTime.m)}Min',
                     style: TextStyle(
                       fontSize: 12.0,
-                      color: _isSleepGoal ? Color(0xFF3CDAF7) : Colors.white,
+                      color: isSleepGoal ? Color(0xFF3CDAF7) : Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -168,12 +171,10 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                _isSleepGoal
-                    ? "Above Sleep Goal (>=8) 😇"
-                    : 'below Sleep Goal (<=8) 😴',
+                isSleepGoal ? "Above Sleep Goal (>=8) 😇" : 'below Sleep Goal (<=8) 😴',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -184,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               _timeWidget(
                 'BedTime',
-                _inBedTime,
+                inBedTime,
                 Icon(
                   Icons.power_settings_new_outlined,
                   size: 25.0,
@@ -193,7 +194,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               _timeWidget(
                 'WakeUp',
-                _outBedTime,
+                outBedTime,
                 Icon(
                   Icons.notifications_active_outlined,
                   size: 25.0,
@@ -204,7 +205,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           Text(
             validRange == true
-                ? "Working hours ${intl.NumberFormat('00').format(_disabledInitTime.h)}:${intl.NumberFormat('00').format(_disabledInitTime.m)} to ${intl.NumberFormat('00').format(_disabledEndTime.h)}:${intl.NumberFormat('00').format(_disabledEndTime.m)}"
+                ? "Working hours ${intl.NumberFormat('00').format(disabledInitTime.h)}:${intl.NumberFormat('00').format(disabledInitTime.m)} to ${intl.NumberFormat('00').format(disabledEndTime.h)}:${intl.NumberFormat('00').format(disabledEndTime.m)}"
                 : "Please schedule according working time!",
             style: TextStyle(
               fontSize: 16.0,
@@ -237,7 +238,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             SizedBox(height: 15),
             Text(
-              '$title',
+              title,
               style: TextStyle(
                 color: Color(0xFF3CDAF7),
                 fontSize: 16,
@@ -252,20 +253,20 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _updateLabels(PickedTime init, PickedTime end, bool? isDisableRange) {
-    _inBedTime = init;
-    _outBedTime = end;
-    _intervalBedTime = formatIntervalTime(
-      init: _inBedTime,
-      end: _outBedTime,
-      clockTimeFormat: _clockTimeFormat,
-      clockIncrementTimeFormat: _clockIncrementTimeFormat,
+    inBedTime = init;
+    outBedTime = end;
+    intervalBedTime = formatIntervalTime(
+      init: inBedTime,
+      end: outBedTime,
+      clockTimeFormat: clockTimeFormat,
+      clockIncrementTimeFormat: clockIncrementTimeFormat,
     );
-    _isSleepGoal = validateSleepGoal(
+    isSleepGoal = validateSleepGoal(
       inTime: init,
       outTime: end,
-      sleepGoal: _sleepGoal,
-      clockTimeFormat: _clockTimeFormat,
-      clockIncrementTimeFormat: _clockIncrementTimeFormat,
+      sleepGoal: sleepGoal,
+      clockTimeFormat: clockTimeFormat,
+      clockIncrementTimeFormat: clockIncrementTimeFormat,
     );
     setState(() {
       validRange = isDisableRange;

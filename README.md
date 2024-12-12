@@ -39,8 +39,12 @@ platforms.
 
 # Preview
 
-![progressive_time_picker](https://github.com/Mindinventory/progressive_time_picker/blob/main/assets/timepicker.gif?raw=true)
-![progressive_time_picker](https://github.com/Mindinventory/progressive_time_picker/blob/main/assets/timepicker_range.gif?raw=true)
+### progressive time picker
+![progressive_time_picker](https://github.com/Mindinventory/progressive_time_picker/raw/main/screenshots/progressive_time_picker.gif)
+
+### progressive time picker with disabled ranges
+![progressive_time_picker_disabled_range](https://github.com/Mindinventory/progressive_time_picker/raw/main/screenshots/progressive_time_picker_disabled_range.gif)
+![progressive_time_picker_multiple_disabled_ranges](https://github.com/Mindinventory/progressive_time_picker/raw/main/screenshots/progressive_time_picker_multiple_disabled_ranges.gif)
 
 ## Basic Usage
 
@@ -65,7 +69,7 @@ And add it in its most basic form like it:
   );
 ```
 
-And for the DisabledRange:
+And for the DisabledRanges:
 
 ```dart
 TimePicker(
@@ -164,5 +168,5 @@ Visit our website [mindinventory.com](https://www.mindinventory.com)
 
 Let us know if you are interested to building Apps or Designing Products.
 <p><a href="https://www.mindinventory.com/contact-us.php?utm_source=gthb&utm_medium=repo&utm_campaign=progressive_time_picker" target="__blank">
-<img src="https://github.com/Mindinventory/progressive_time_picker/blob/main/assets/have_a_project_button.png?raw=true" width="203" height="43"  alt="flutter app development">
+<img src="https://github.com/Mindinventory/progressive_time_picker/raw/main/assets/have_a_project_button.png" width="203" height="43"  alt="flutter app development">
 </a></p>
