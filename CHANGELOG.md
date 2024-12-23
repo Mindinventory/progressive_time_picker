@@ -7,7 +7,7 @@
 
 * Merged the PR.
     - [#18](https://github.com/Mindinventory/progressive_time_picker/pull/18) - Support multiple
-      disabled time ranges in TimePicker Thanks to [hishtadlut](https://github.com/hishtadlut).
+      disabled time ranges in TimePicker, Thanks to [hishtadlut](https://github.com/hishtadlut).
 * Fixed the issue.
     - [#19](https://github.com/Mindinventory/progressive_time_picker/issues/19) - Mouse cursor
       not showing up on desktop.
@@ -18,9 +18,9 @@
 
 * Merged the PRs.
     - [#11](https://github.com/Mindinventory/progressive_time_picker/pull/11) - Update the
-      base_time_painter.dart Thanks to [dragonfire1975](https://github.com/dragonfire1975).
+      base_time_painter.dart, Thanks to [dragonfire1975](https://github.com/dragonfire1975).
     - [#14](https://github.com/Mindinventory/progressive_time_picker/pull/14) - More flex
-      customization for clock number Thanks to [ductung-bfast](https://github.com/ductung-bfast).
+      customization for clock number, Thanks to [ductung-bfast](https://github.com/ductung-bfast).
 * Improved the code of the merged PRs and refactored other code.
 * Updated the library details.
 
