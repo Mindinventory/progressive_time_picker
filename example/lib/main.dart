@@ -85,9 +85,9 @@ class _MyHomePageState extends State<MyHomePage> {
               DisabledRange(
                 initTime: disabledInitTime,
                 endTime: disabledEndTime,
+                color: Colors.yellow.shade300,
               ),
             ],
-            disabledRangesColor: Colors.grey,
             disabledRangesErrorColor: Colors.red,
             height: 260.0,
             width: 260.0,

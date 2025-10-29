@@ -63,10 +63,6 @@ class TimePicker extends StatefulWidget {
   /// used to disable Selection ranges, If null so there is no disable time ranges
   final List<DisabledRange>? disabledRanges;
 
-  /// defines the color for the disabled range
-  /// Default Value: [Colors.grey]
-  final Color? disabledRangesColor;
-
   /// defines the color for the error in disabled range
   /// Default Value: [Colors.red]
   final Color? disabledRangesErrorColor;
@@ -94,7 +90,6 @@ class TimePicker extends StatefulWidget {
     this.isEndHandlerSelectable = true,
     this.isSelectableHandlerMoveAble = true,
     this.disabledRanges,
-    this.disabledRangesColor = Colors.grey,
     this.disabledRangesErrorColor = Colors.red,
     this.drawInitHandlerOnTop = false,
   });
@@ -106,6 +101,7 @@ class _TimePickerState extends State<TimePicker> {
 
   List<int>? _disabledInit;
   List<int>? _disabledEnd;
+  List<Color>? _disabledRangeColors;
 
   List<DateTime>? disabledStartTime;
   List<DateTime>? disabledEndTime;
@@ -151,6 +147,7 @@ class _TimePickerState extends State<TimePicker> {
 
     _disabledInit = [];
     _disabledEnd = [];
+    _disabledRangeColors = [];
 
     if (widget.disabledRanges?.isNotEmpty ?? false) {
       for (DisabledRange disabledRange in widget.disabledRanges!) {
@@ -176,6 +173,7 @@ class _TimePickerState extends State<TimePicker> {
                 ClockIncrementTimeFormat.fiveMin,
           ),
         );
+        _disabledRangeColors?.add(disabledRange.color?? Colors.grey.shade600);
       }
 
       error = validateRange(widget.initTime, widget.endTime);
@@ -184,7 +182,7 @@ class _TimePickerState extends State<TimePicker> {
 
   TimePickerDecoration getDefaultPickerDecorator() {
     var startBox = TimePickerHandlerDecoration(
-      color: Colors.lightBlue[900]!.withOpacity(0.6),
+      color: Colors.lightBlue[900]!.withValues(alpha: 0.6),
       shape: BoxShape.circle,
       icon: Icon(
         Icons.filter_tilt_shift,
@@ -195,7 +193,7 @@ class _TimePickerState extends State<TimePicker> {
     );
 
     var endBox = TimePickerHandlerDecoration(
-      color: Colors.lightBlue[900]!.withOpacity(0.8),
+      color: Colors.lightBlue[900]!.withValues(alpha:0.8),
       shape: BoxShape.circle,
       icon: Icon(
         Icons.filter_tilt_shift,
@@ -211,7 +209,7 @@ class _TimePickerState extends State<TimePicker> {
         startAngle: 3 * pi / 2,
         endAngle: 7 * pi / 2,
         tileMode: TileMode.repeated,
-        colors: [Colors.red.withOpacity(0.8), Colors.blue.withOpacity(0.8)],
+        colors: [Colors.red.withValues(alpha:0.8), Colors.blue.withValues(alpha:0.8)],
       ),
     );
 
@@ -223,14 +221,14 @@ class _TimePickerState extends State<TimePicker> {
     );
 
     var secondarySectorDecoration = primarySectorDecoration.copyWith(
-      color: Colors.lightBlue.withOpacity(0.5),
+      color: Colors.lightBlue.withValues(alpha:0.5),
       width: 1,
       size: 6,
     );
 
     return TimePickerDecoration(
       sweepDecoration: sweepDecoration,
-      baseColor: Colors.lightBlue[200]!.withOpacity(0.2),
+      baseColor: Colors.lightBlue[200]!.withValues(alpha:0.2),
       primarySectorsDecoration: primarySectorDecoration,
       secondarySectorsDecoration: secondarySectorDecoration,
       initHandlerDecoration: startBox,
@@ -248,7 +246,7 @@ class _TimePickerState extends State<TimePicker> {
         end: _end,
         disableTimeStart: _disabledInit,
         disableTimeEnd: _disabledEnd,
-        disabledRangeColor: widget.disabledRangesColor,
+        disabledRangeColors: _disabledRangeColors,
         errorColor: widget.disabledRangesErrorColor,
         primarySectors: widget.primarySectors ?? 0,
         secondarySectors: widget.secondarySectors ?? 0,
@@ -421,8 +419,10 @@ class DisabledRange {
   const DisabledRange({
     required this.initTime,
     required this.endTime,
+    this.color,
   });
 
   final PickedTime initTime;
   final PickedTime endTime;
+  final Color? color;
 }

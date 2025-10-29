@@ -1,3 +1,11 @@
+## 1.0.4
+
+* Feature request.
+    - [#20](https://github.com/Mindinventory/progressive_time_picker/issues/20) - Custom color for each disabled range
+    - Removed `disabledRangesColor` and added new param for color inside `DisabledRange`. 
+* Refactored the example code.
+* Updated the library details.
+
 ## 1.0.3
 
 * Refactored the example code.

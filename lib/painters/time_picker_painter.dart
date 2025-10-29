@@ -22,7 +22,7 @@ class TimePickerPainter extends StatefulWidget {
 
   final List<int>? disableTimeStart;
   final List<int>? disableTimeEnd;
-  final Color? disabledRangeColor;
+  final List<Color>? disabledRangeColors;
   final Color? errorColor;
 
   /// the number of primary sectors to be painted
@@ -63,7 +63,7 @@ class TimePickerPainter extends StatefulWidget {
     required this.end,
     this.disableTimeStart,
     this.disableTimeEnd,
-    this.disabledRangeColor,
+    this.disabledRangeColors,
     this.errorColor,
     required this.child,
     required this.primarySectors,
@@ -222,7 +222,7 @@ class _TimePickerPainterState extends State<TimePickerPainter> {
       disableTimeStartAngle: _disableTimeStartAngle,
       disableTimeEndAngle: _disableTimeEndAngle,
       disabledSweepAngle: _disableSweepAngle,
-      disabledRangeColor: widget.disabledRangeColor,
+      disabledRangeColors: widget.disabledRangeColors,
       errorColor: widget.errorColor,
       drawInitHandlerOnTop: widget.drawInitHandlerOnTop,
     );

@@ -30,7 +30,7 @@ class PickerPainter extends CustomPainter {
   List<double>? disabledSweepAngle;
 
   /// Defines the disabled range color.
-  Color? disabledRangeColor;
+  List<Color>? disabledRangeColors;
 
   /// Defines the error color on disabled range.
   Color? errorColor;
@@ -72,7 +72,7 @@ class PickerPainter extends CustomPainter {
     this.disableTimeStartAngle,
     this.disableTimeEndAngle,
     this.disabledSweepAngle,
-    this.disabledRangeColor,
+    this.disabledRangeColors,
     this.errorColor,
     this.drawInitHandlerOnTop = false,
   });
@@ -80,8 +80,7 @@ class PickerPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     _center = Offset(size.width / 2, size.height / 2);
-    _radius = min(size.width / 2, size.height / 2) -
-        pickerDecorator.sweepDecoration.pickerStrokeWidth;
+    _radius = min(size.width / 2, size.height / 2) - pickerDecorator.sweepDecoration.pickerStrokeWidth;
 
     pickerDecorator.sweepDecoration.paint(
       canvas,
@@ -101,6 +100,7 @@ class PickerPainter extends CustomPainter {
           disableTimeStartAngle![i],
           disableTimeEndAngle![i],
           disabledSweepAngle![i],
+          disabledRangeColors![i],
         );
       }
     }
@@ -120,13 +120,13 @@ class PickerPainter extends CustomPainter {
     double startAngle,
     double endAngle,
     double sweepAngle,
+    Color? disabledRangeColor,
   ) {
     TimePickerSweepDecoration disableSweepDecorator = TimePickerSweepDecoration(
       pickerStrokeWidth: pickerDecorator.sweepDecoration.pickerStrokeWidth,
       pickerColor: disabledRangeColor ?? Colors.grey.shade600,
       connectorColor: pickerDecorator.sweepDecoration.connectorColor,
-      connectorStrokeWidth:
-          pickerDecorator.sweepDecoration.connectorStrokeWidth,
+      connectorStrokeWidth: pickerDecorator.sweepDecoration.connectorStrokeWidth,
       pickerGradient: pickerDecorator.sweepDecoration.pickerGradient,
       showConnector: false,
       useRoundedPickerCap: false,
